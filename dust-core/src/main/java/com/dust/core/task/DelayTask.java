@@ -7,7 +7,7 @@ public interface DelayTask extends Task {
 
     /**
      * 判断是否到执行时间
-     * @return 布尔
+     * @return 布尔值
      */
     boolean isTimeUp();
 

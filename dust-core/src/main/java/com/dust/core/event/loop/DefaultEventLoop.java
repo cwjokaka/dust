@@ -1,9 +1,7 @@
 package com.dust.core.event.loop;
 
 import com.dust.core.manager.FrameManager;
-import com.dust.core.task.DefaultDelayTask;
-import com.dust.core.task.DelayTask;
-import com.dust.core.task.Task;
+import com.dust.core.task.*;
 
 import java.util.PriorityQueue;
 import java.util.concurrent.Executors;
@@ -15,8 +13,14 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class DefaultEventLoop extends AbstractEventLoop {
 
+    /**
+     * 执行循环的线程
+     */
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
+    /**
+     * 延时任务队列
+     */
     private final PriorityQueue<DelayTask> taskPriorityQueue = new PriorityQueue<>();
 
     public void run() {
@@ -36,14 +40,23 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
         scheduledExecutorService.shutdown();
     }
 
-    public void addDelayTask(Task task, long delay) {
+    public void submitDelayTask(Task task, long delay) {
         taskPriorityQueue.add(new DefaultDelayTask(task, delay));
+    }
+
+    public void submitScheduleTask(Task task, long delay) {
+        taskPriorityQueue.add(new DefaultScheduleTask(task, delay));
     }
 
     @Override
     protected void runAllTasks() {
         while (taskPriorityQueue.peek() != null && taskPriorityQueue.peek().isTimeUp()) {
-            taskPriorityQueue.poll().run();
+            DelayTask delayTask = taskPriorityQueue.poll();
+            delayTask.run();
+            if (delayTask instanceof ScheduleTask) {
+                ((ScheduleTask) delayTask).refreshTime();
+                taskPriorityQueue.add(delayTask);
+            }
         }
     }
 
