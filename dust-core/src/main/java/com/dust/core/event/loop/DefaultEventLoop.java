@@ -26,10 +26,10 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
     @Override
     protected void executeLogic() {
         FrameManager.increaseFrame();
-        execute();
+        executeEachFrame();
     }
 
-    protected abstract void execute();
+    protected abstract void executeEachFrame();
 
     @Override
     public void stop() {
