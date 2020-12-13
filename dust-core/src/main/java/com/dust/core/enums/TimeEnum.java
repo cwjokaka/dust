@@ -18,4 +18,8 @@ public enum TimeEnum {
         this.offset = offset;
     }
 
+    public long getOffset() {
+        return offset;
+    }
+
 }

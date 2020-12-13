@@ -1,5 +1,6 @@
 package com.dust.core.event.loop;
 
+import com.dust.core.enums.TimeEnum;
 import com.dust.core.manager.FrameManager;
 import com.dust.core.task.*;
 
@@ -16,9 +17,9 @@ import java.util.concurrent.TimeUnit;
 public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     /**
-     * 执行循环的线程
+     * 执行事件循环的线程
      */
-    private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService eventLoopThread = Executors.newSingleThreadScheduledExecutor();
 
     /**
      * 延时任务队列
@@ -32,7 +33,7 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     @Override
     public void run() {
-        scheduledExecutorService.scheduleWithFixedDelay(this::loop, 0, 16, TimeUnit.MILLISECONDS);
+        eventLoopThread.scheduleWithFixedDelay(this::loop, 0, 16, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -45,11 +46,15 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     @Override
     public void stop() {
-        scheduledExecutorService.shutdown();
+        eventLoopThread.shutdown();
     }
 
     public void submitDelayTask(Task task, long delayTime) {
-        taskPriorityQueue.add(new DefaultDelayTask(task, delayTime));
+        submitDelayTask(task, delayTime, TimeEnum.MILLISECOND);
+    }
+
+    public void submitDelayTask(Task task, long delayTime, TimeEnum timeEnum) {
+        taskPriorityQueue.add(new DefaultDelayTask(task, delayTime * timeEnum.getOffset()));
     }
 
     public void submitScheduleTask(Task task, long delayTime) {
@@ -67,11 +72,11 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
         }
         while (!taskQueue.isEmpty()) {
             DelayTask delayTask = taskQueue.poll();
-            if (!delayTask.isExecutable()) {
-                taskPriorityQueue.add(delayTask);
+            if (delayTask.isTerminated()) {
                 continue;
             }
-            if (delayTask.isTerminated()) {
+            if (!delayTask.isExecutable()) {
+                taskPriorityQueue.add(delayTask);
                 continue;
             }
             delayTask.run();
