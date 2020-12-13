@@ -3,12 +3,20 @@ package com.dust.core.task;
 /**
  * 延时任务
  */
-public interface DelayTask extends Task {
+public interface DelayTask extends Task, Terminable {
 
     /**
-     * 判断是否到执行时间
+     * 是否到执行时间
      * @return 布尔值
      */
     boolean isTimeUp();
+
+    /**
+     * 是否可执行
+     * @return 布尔值
+     */
+    default boolean isExecutable() {
+        return true;
+    }
 
 }

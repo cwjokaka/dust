@@ -2,6 +2,9 @@ package com.dust.core.task;
 
 import java.util.Objects;
 
+/**
+ * 延时任务抽象类
+ */
 public abstract class AbstractDelayTask implements DelayTask, Comparable<AbstractDelayTask> {
 
     /**
@@ -10,9 +13,14 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     private final Task task;
 
     /**
-     * 延时时间
+     * 延时时间(毫秒)
      */
     protected final long delayTime;
+
+    /**
+     * 是否被终止
+     */
+    protected boolean isTerminated = false;
 
     /**
      * 执行的(绝对)时间戳
@@ -38,6 +46,16 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     @Override
     public int compareTo(AbstractDelayTask o) {
         return this.endTime > o.endTime ? 1 : -1;
+    }
+
+    @Override
+    public void terminate() {
+        this.isTerminated = true;
+    }
+
+    @Override
+    public boolean isTerminated() {
+        return isTerminated;
     }
 
 }

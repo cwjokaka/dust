@@ -13,7 +13,7 @@ public interface EventLoop {
     void loop();
 
     /**
-     * 停事件循环
+     * 停止事件循环
      */
     void stop();
 

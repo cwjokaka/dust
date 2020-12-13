@@ -3,7 +3,9 @@ package com.dust.core.event.loop;
 import com.dust.core.manager.FrameManager;
 import com.dust.core.task.*;
 
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +25,12 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
      */
     private final PriorityQueue<DelayTask> taskPriorityQueue = new PriorityQueue<>();
 
+    /**
+     * 就绪任务队列
+     */
+    private final Queue<DelayTask> taskQueue = new LinkedList<>();
+
+    @Override
     public void run() {
         scheduledExecutorService.scheduleWithFixedDelay(this::loop, 0, 16, TimeUnit.MILLISECONDS);
     }
@@ -40,18 +48,32 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
         scheduledExecutorService.shutdown();
     }
 
-    public void submitDelayTask(Task task, long delay) {
-        taskPriorityQueue.add(new DefaultDelayTask(task, delay));
+    public void submitDelayTask(Task task, long delayTime) {
+        taskPriorityQueue.add(new DefaultDelayTask(task, delayTime));
     }
 
-    public void submitScheduleTask(Task task, long delay) {
-        taskPriorityQueue.add(new DefaultScheduleTask(task, delay));
+    public void submitScheduleTask(Task task, long delayTime) {
+        taskPriorityQueue.add(new DefaultScheduleTask(task, delayTime));
+    }
+
+    public void submitRepeatTask(Task task, long delayTime, int repeatMaxCount) {
+        taskPriorityQueue.add(new DefaultRepeatTask(task, delayTime, repeatMaxCount));
     }
 
     @Override
     protected void runAllTasks() {
-        while (taskPriorityQueue.peek() != null && taskPriorityQueue.peek().isTimeUp()) {
-            DelayTask delayTask = taskPriorityQueue.poll();
+        while (!taskPriorityQueue.isEmpty() && taskPriorityQueue.peek().isTimeUp()) {
+            taskQueue.add(taskPriorityQueue.poll());
+        }
+        while (!taskQueue.isEmpty()) {
+            DelayTask delayTask = taskQueue.poll();
+            if (!delayTask.isExecutable()) {
+                taskPriorityQueue.add(delayTask);
+                continue;
+            }
+            if (delayTask.isTerminated()) {
+                continue;
+            }
             delayTask.run();
             if (delayTask instanceof ScheduleTask) {
                 ((ScheduleTask) delayTask).refreshTime();

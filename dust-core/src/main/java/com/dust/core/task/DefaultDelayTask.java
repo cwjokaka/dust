@@ -5,5 +5,4 @@ public class DefaultDelayTask extends AbstractDelayTask {
     public DefaultDelayTask(Task task, long delayTime) {
         super(task, delayTime);
     }
-
 }
