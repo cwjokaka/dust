@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dust.iml" filepath="$PROJECT_DIR$/dust.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dust-actor/dust-actor.iml" filepath="$PROJECT_DIR$/dust-actor/dust-actor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dust-core/dust-core.iml" filepath="$PROJECT_DIR$/dust-core/dust-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dust-net/dust-net.iml" filepath="$PROJECT_DIR$/dust-net/dust-net.iml" />
+    </modules>
+  </component>
+</project>
