@@ -27,12 +27,12 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
     /**
      * 基于时间的延时任务队列
      */
-    private final PriorityQueue<AbstractTimeDelayTask> taskTimePriorityQueue = new PriorityQueue<>();
+    private final Queue<AbstractTimeDelayTask> taskTimePriorityQueue = new PriorityQueue<>();
 
     /**
      * 基于帧的延时任务队列
      */
-    private final PriorityQueue<AbstractFrameDelayTask> taskFramePriorityQueue = new PriorityQueue<>();
+    private final Queue<AbstractFrameDelayTask> taskFramePriorityQueue = new PriorityQueue<>();
 
     /**
      * 基于时间的就绪任务队列
