@@ -1,5 +1,8 @@
 package com.dust.core.event.loop;
 
+/**
+ * 事件循环
+ */
 public interface EventLoop {
 
     /**
@@ -13,8 +16,13 @@ public interface EventLoop {
     void loop();
 
     /**
-     * 停止事件循环
+     * 暂停事件循环
      */
     void stop();
+
+    /**
+     * 终止事件循环
+     */
+    void terminate();
 
 }

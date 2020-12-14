@@ -1,9 +1,9 @@
-package com.dust.core.manager;
+package com.dust.core.sys;
 
 /**
- * 帧数管理
+ * 全局帧数管理器
  */
-public final class FrameManager {
+public final class FrameSystem {
 
     private static long currentFrame = 0;
 

@@ -13,7 +13,7 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     private final Task task;
 
     /**
-     * 延时时间(毫秒)
+     * 延时时间
      */
     protected final long delayTime;
 
@@ -23,19 +23,14 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     protected boolean isTerminated = false;
 
     /**
-     * 执行的(绝对)时间戳
+     * 下次执行的时间点
      */
-    protected long endTime;
+    protected long nextExecuteTime;
 
     public AbstractDelayTask(Task task, long delayTime) {
         this.task = Objects.requireNonNull(task);
         this.delayTime = delayTime;
-        this.endTime = System.currentTimeMillis() + delayTime;
-    }
-
-    @Override
-    public boolean isTimeUp() {
-        return System.currentTimeMillis() > endTime;
+        initNextExecuteTime();
     }
 
     @Override
@@ -45,7 +40,7 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
 
     @Override
     public int compareTo(AbstractDelayTask o) {
-        return this.endTime > o.endTime ? 1 : -1;
+        return this.nextExecuteTime > o.nextExecuteTime ? 1 : -1;
     }
 
     @Override
@@ -57,5 +52,7 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     public boolean isTerminated() {
         return isTerminated;
     }
+
+    protected abstract void initNextExecuteTime();
 
 }

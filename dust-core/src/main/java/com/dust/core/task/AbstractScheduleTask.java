@@ -8,7 +8,7 @@ public abstract class AbstractScheduleTask extends AbstractDelayTask implements 
 
     @Override
     public void refreshTime() {
-        this.endTime = System.currentTimeMillis() + this.delayTime;
+        this.nextExecuteTime = System.currentTimeMillis() + this.delayTime;
     }
 
 }

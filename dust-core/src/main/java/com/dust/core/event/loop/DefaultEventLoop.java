@@ -1,8 +1,11 @@
 package com.dust.core.event.loop;
 
 import com.dust.core.enums.TimeEnum;
-import com.dust.core.manager.FrameManager;
+import com.dust.core.sys.FrameSystem;
 import com.dust.core.task.*;
+import com.dust.core.task.frame.AbstractFrameDelayTask;
+import com.dust.core.task.time.AbstractTimeDelayTask;
+import com.dust.core.task.time.DefaultTimeDelayTask;
 
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -22,14 +25,19 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
     private final ScheduledExecutorService eventLoopThread = Executors.newSingleThreadScheduledExecutor();
 
     /**
-     * 延时任务队列
+     * 基于时间的延时任务队列
      */
-    private final PriorityQueue<DelayTask> taskPriorityQueue = new PriorityQueue<>();
+    private final PriorityQueue<AbstractTimeDelayTask> taskTimePriorityQueue = new PriorityQueue<>();
 
     /**
-     * 就绪任务队列
+     * 基于帧的延时任务队列
      */
-    private final Queue<DelayTask> taskQueue = new LinkedList<>();
+    private final PriorityQueue<AbstractFrameDelayTask> taskFramePriorityQueue = new PriorityQueue<>();
+
+    /**
+     * 基于时间的就绪任务队列
+     */
+    private final Queue<AbstractTimeDelayTask> taskTimeQueue = new LinkedList<>();
 
     @Override
     public void run() {
@@ -38,51 +46,63 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     @Override
     protected void executeLogic() {
-        FrameManager.increaseFrame();
+        FrameSystem.increaseFrame();
         executeEachFrame();
     }
 
     protected abstract void executeEachFrame();
 
     @Override
-    public void stop() {
+    public void terminate() {
         eventLoopThread.shutdown();
     }
 
-    public void submitDelayTask(Task task, long delayTime) {
-        submitDelayTask(task, delayTime, TimeEnum.MILLISECOND);
+    public void submitTimeDelayTask(Task task, long delayTime) {
+        submitTimeDelayTask(task, delayTime, TimeEnum.MILLISECOND);
     }
 
-    public void submitDelayTask(Task task, long delayTime, TimeEnum timeEnum) {
-        taskPriorityQueue.add(new DefaultDelayTask(task, delayTime * timeEnum.getOffset()));
+    public void submitTimeDelayTask(Task task, long delayTime, TimeEnum timeEnum) {
+        taskTimePriorityQueue.add(new DefaultTimeDelayTask(task, delayTime * timeEnum.getOffset()));
     }
 
-    public void submitScheduleTask(Task task, long delayTime) {
-        taskPriorityQueue.add(new DefaultScheduleTask(task, delayTime));
-    }
+//    public void submitScheduleTask(Task task, long delayTime) {
+//        taskTimePriorityQueue.add(new DefaultScheduleTask(task, delayTime));
+//    }
+//
+//    public void submitRepeatTask(Task task, long delayTime, int repeatMaxCount) {
+//        taskTimePriorityQueue.add(new DefaultRepeatTask(task, delayTime, repeatMaxCount));
+//    }
 
-    public void submitRepeatTask(Task task, long delayTime, int repeatMaxCount) {
-        taskPriorityQueue.add(new DefaultRepeatTask(task, delayTime, repeatMaxCount));
-    }
+//    public void submitFrameRepeatTask(Task task, long delayTime, int repeatMaxCount) {
+//        taskFramePriorityQueue.add(new DefaultRepeatTask(task, delayTime, repeatMaxCount));
+//    }
 
     @Override
     protected void runAllTasks() {
-        while (!taskPriorityQueue.isEmpty() && taskPriorityQueue.peek().isTimeUp()) {
-            taskQueue.add(taskPriorityQueue.poll());
+        fetchAllReadyTask();
+        runAllReadyTask();
+    }
+
+    private void fetchAllReadyTask() {
+        while (!taskTimePriorityQueue.isEmpty() && taskTimePriorityQueue.peek().isTimeUp()) {
+            taskTimeQueue.add(taskTimePriorityQueue.poll());
         }
-        while (!taskQueue.isEmpty()) {
-            DelayTask delayTask = taskQueue.poll();
+    }
+
+    private void runAllReadyTask() {
+        while (!taskTimeQueue.isEmpty()) {
+            AbstractTimeDelayTask delayTask = taskTimeQueue.poll();
             if (delayTask.isTerminated()) {
                 continue;
             }
             if (!delayTask.isExecutable()) {
-                taskPriorityQueue.add(delayTask);
+                taskTimePriorityQueue.add(delayTask);
                 continue;
             }
             delayTask.run();
             if (delayTask instanceof ScheduleTask) {
                 ((ScheduleTask) delayTask).refreshTime();
-                taskPriorityQueue.add(delayTask);
+                taskTimePriorityQueue.add(delayTask);
             }
         }
     }

@@ -6,7 +6,7 @@ package com.dust.core.task;
 public interface DelayTask extends Task, Terminable {
 
     /**
-     * 是否到执行时间
+     * 是否到执行时间点
      * @return 布尔值
      */
     boolean isTimeUp();
