@@ -36,8 +36,8 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
 
     public AbstractDelayTask(Task task, long delayTime, Axis axis) {
         this.task = Objects.requireNonNull(task);
+        this.axis = Objects.requireNonNull(axis);
         this.delayTime = delayTime;
-        this.axis = axis;
         this.nextExecuteTime = axis.refreshTime(delayTime);
     }
 

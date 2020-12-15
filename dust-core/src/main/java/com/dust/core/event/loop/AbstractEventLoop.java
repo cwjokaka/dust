@@ -1,5 +1,7 @@
 package com.dust.core.event.loop;
 
+import com.dust.core.sys.FrameSystem;
+
 /**
  * 事件循环模板
  */
@@ -19,7 +21,15 @@ public abstract class AbstractEventLoop implements EventLoop {
     /**
      * 执行逻辑
      */
-    protected abstract void executeLogic();
+    private void executeLogic() {
+        FrameSystem.increaseFrame();
+        executeEachFrame();
+    }
+
+    /**
+     * 执行每帧的逻辑
+     */
+    protected abstract void executeEachFrame();
 
     /**
      * 渲染画面

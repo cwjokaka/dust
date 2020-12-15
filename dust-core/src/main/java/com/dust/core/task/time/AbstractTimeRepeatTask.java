@@ -13,10 +13,4 @@ public abstract class AbstractTimeRepeatTask extends AbstractRepeatTask {
         super(task, delayTime, repeatMaxCount, TimeAxis.getInstance());
     }
 
-
-    @Override
-    public boolean isTimeUp() {
-        return System.currentTimeMillis() >= this.nextExecuteTime;
-    }
-
 }

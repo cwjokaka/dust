@@ -53,14 +53,6 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
     }
 
     @Override
-    protected void executeLogic() {
-        FrameSystem.increaseFrame();
-        executeEachFrame();
-    }
-
-    protected abstract void executeEachFrame();
-
-    @Override
     public void terminate() {
         eventLoopThread.shutdown();
     }
