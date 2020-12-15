@@ -1,7 +1,22 @@
 package com.dust.core.task.time;
 
-public abstract class AbstractTimeRepeatTask {
+import com.dust.core.axis.TimeAxis;
+import com.dust.core.task.AbstractRepeatTask;
+import com.dust.core.task.Task;
+
+/**
+ * 基于时间的重复定时任务
+ */
+public abstract class AbstractTimeRepeatTask extends AbstractRepeatTask {
+
+    public AbstractTimeRepeatTask(Task task, long delayTime, int repeatMaxCount) {
+        super(task, delayTime, repeatMaxCount, TimeAxis.getInstance());
+    }
 
 
+    @Override
+    public boolean isTimeUp() {
+        return System.currentTimeMillis() >= this.nextExecuteTime;
+    }
 
 }

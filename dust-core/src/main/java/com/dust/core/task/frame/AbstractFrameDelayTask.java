@@ -1,5 +1,6 @@
 package com.dust.core.task.frame;
 
+import com.dust.core.axis.FrameAxis;
 import com.dust.core.sys.FrameSystem;
 import com.dust.core.task.AbstractDelayTask;
 import com.dust.core.task.Task;
@@ -10,17 +11,7 @@ import com.dust.core.task.Task;
 public abstract class AbstractFrameDelayTask extends AbstractDelayTask {
 
     public AbstractFrameDelayTask(Task task, long delayTime) {
-        super(task, delayTime);
-    }
-
-    @Override
-    public boolean isTimeUp() {
-        return FrameSystem.currentFrame() >= this.nextExecuteTime;
-    }
-
-    @Override
-    protected void initNextExecuteTime() {
-        this.nextExecuteTime = FrameSystem.currentFrame() + delayTime;
+        super(task, delayTime, FrameAxis.getInstance());
     }
 
 }

@@ -5,7 +5,7 @@ package com.dust.core.event.loop;
  */
 public abstract class AbstractEventLoop implements EventLoop {
 
-    protected boolean isStop = false;
+    private boolean isRunning = true;
 
     @Override
     public void loop() {
@@ -32,15 +32,15 @@ public abstract class AbstractEventLoop implements EventLoop {
     protected abstract void runAllTasks();
 
     public void stop() {
-        this.isStop = true;
+        this.isRunning = false;
     }
 
     public void resume() {
-        this.isStop = false;
+        this.isRunning = false;
     }
 
     public boolean isRunning() {
-        return !this.isStop;
+        return isRunning;
     }
 
 }

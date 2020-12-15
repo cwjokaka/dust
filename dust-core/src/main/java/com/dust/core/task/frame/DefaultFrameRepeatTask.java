@@ -9,11 +9,6 @@ public class DefaultFrameRepeatTask extends AbstractFrameRepeatTask {
     }
 
     @Override
-    protected void initNextExecuteTime() {
-
-    }
-
-    @Override
     public boolean isTimeUp() {
         return false;
     }

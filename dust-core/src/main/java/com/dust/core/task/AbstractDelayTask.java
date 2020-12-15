@@ -1,5 +1,7 @@
 package com.dust.core.task;
 
+import com.dust.core.axis.Axis;
+
 import java.util.Objects;
 
 /**
@@ -18,7 +20,7 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     protected final long delayTime;
 
     /**
-     * 是否被终止
+     * 是否已被终止
      */
     protected boolean isTerminated = false;
 
@@ -27,10 +29,16 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
      */
     protected long nextExecuteTime;
 
-    public AbstractDelayTask(Task task, long delayTime) {
+    /**
+     * 时间轴,用于判断和计算不同维度的时间
+     */
+    protected final Axis axis;
+
+    public AbstractDelayTask(Task task, long delayTime, Axis axis) {
         this.task = Objects.requireNonNull(task);
         this.delayTime = delayTime;
-        initNextExecuteTime();
+        this.axis = axis;
+        this.nextExecuteTime = axis.refreshTime(delayTime);
     }
 
     @Override
@@ -53,6 +61,9 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
         return isTerminated;
     }
 
-    protected abstract void initNextExecuteTime();
+    @Override
+    public boolean isTimeUp() {
+        return axis.isTimeUp(nextExecuteTime);
+    }
 
 }
