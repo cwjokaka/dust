@@ -60,6 +60,14 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
         submitTimeDelayTask(task, initDelayTime, delayTime, TimeEnum.MILLISECOND);
     }
 
+    public void submitTimeDelayTask(Task task, long delayTime) {
+        submitTimeDelayTask(task, delayTime, delayTime, TimeEnum.MILLISECOND);
+    }
+
+    public void submitTimeDelayTask(Task task, long delayTime, TimeEnum timeEnum) {
+        submitTimeDelayTask(task, delayTime, delayTime, timeEnum);
+    }
+
     public void submitTimeDelayTask(Task task, long initDelayTime, long delayTime, TimeEnum timeEnum) {
         taskTimePriorityQueue.add(new DefaultTimeDelayTask(
                 task,
