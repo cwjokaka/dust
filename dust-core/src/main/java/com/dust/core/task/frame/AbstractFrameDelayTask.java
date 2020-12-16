@@ -10,8 +10,8 @@ import com.dust.core.task.Task;
  */
 public abstract class AbstractFrameDelayTask extends AbstractDelayTask {
 
-    public AbstractFrameDelayTask(Task task, long delayTime) {
-        super(task, delayTime, FrameAxis.getInstance());
+    public AbstractFrameDelayTask(Task task, long initDelayFrame, long delayFrame) {
+        super(task, initDelayFrame, delayFrame, FrameAxis.getInstance());
     }
 
 }

@@ -17,7 +17,7 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     /**
      * 延时时间
      */
-    protected final long delayTime;
+    protected final long delay;
 
     /**
      * 是否已被终止
@@ -34,11 +34,18 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
      */
     protected final Axis axis;
 
-    public AbstractDelayTask(Task task, long delayTime, Axis axis) {
+    /**
+     * 构造器
+     * @param task 将要执行的任务
+     * @param initDelay 初始的延时
+     * @param delay 延时时间
+     * @param axis 时间轴
+     */
+    public AbstractDelayTask(Task task, long initDelay, long delay, Axis axis) {
         this.task = Objects.requireNonNull(task);
         this.axis = Objects.requireNonNull(axis);
-        this.delayTime = delayTime;
-        this.nextExecuteTime = axis.refreshTime(delayTime);
+        this.delay = delay;
+        this.nextExecuteTime = axis.refreshTime(initDelay);
     }
 
     @Override

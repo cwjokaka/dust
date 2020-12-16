@@ -4,8 +4,8 @@ import com.dust.core.task.Task;
 
 public class DefaultTimeRepeatTask extends AbstractTimeRepeatTask {
 
-    public DefaultTimeRepeatTask(Task task, long delayTime, int repeatMaxCount) {
-        super(task, delayTime, repeatMaxCount);
+    public DefaultTimeRepeatTask(Task task, long initDelayTime, long delayTime, int repeatMaxCount) {
+        super(task, initDelayTime, delayTime, repeatMaxCount);
     }
 
 }

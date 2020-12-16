@@ -4,8 +4,8 @@ import com.dust.core.task.Task;
 
 public class DefaultFrameDelayTask extends AbstractFrameDelayTask {
 
-    public DefaultFrameDelayTask(Task task, long delayTime) {
-        super(task, delayTime);
+    public DefaultFrameDelayTask(Task task, long initDelayFrame, long delayFrame) {
+        super(task, initDelayFrame, delayFrame);
     }
 
 }

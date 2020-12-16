@@ -8,8 +8,7 @@ public enum TimeEnum {
     MILLISECOND(1),
     SECOND(1000),
     MINUTE(1000 * 60),
-    HOUR(1000 * 60 * 60),
-    FRAME(0)
+    HOUR(1000 * 60 * 60)
     ;
 
     long offset;

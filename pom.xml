@@ -5,8 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <java.version>1.8</java.version>
-        <junit.version>4.12</junit.version>
+        <java.version>11</java.version>
     </properties>
 
     <artifactId>dust</artifactId>
@@ -18,17 +17,8 @@
         <module>dust-core</module>
         <module>dust-actor</module>
         <module>dust-net</module>
+        <module>dust-graphics</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>

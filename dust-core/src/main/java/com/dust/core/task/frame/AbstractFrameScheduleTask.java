@@ -6,8 +6,8 @@ import com.dust.core.task.Task;
 
 public abstract class AbstractFrameScheduleTask extends AbstractScheduleTask {
 
-    public AbstractFrameScheduleTask(Task task, long delayTime) {
-        super(task, delayTime, FrameAxis.getInstance());
+    public AbstractFrameScheduleTask(Task task, long initDelayFrame, long delayFrame) {
+        super(task, initDelayFrame, delayFrame, FrameAxis.getInstance());
     }
 
 }

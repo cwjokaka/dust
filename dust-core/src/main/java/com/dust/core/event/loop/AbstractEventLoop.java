@@ -41,14 +41,17 @@ public abstract class AbstractEventLoop implements EventLoop {
      */
     protected abstract void runAllTasks();
 
-    public void stop() {
+    @Override
+    public void pause() {
         this.isRunning = false;
     }
 
+    @Override
     public void resume() {
-        this.isRunning = false;
+        this.isRunning = true;
     }
 
+    @Override
     public boolean isRunning() {
         return isRunning;
     }

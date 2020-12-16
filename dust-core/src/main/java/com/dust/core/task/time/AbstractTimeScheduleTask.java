@@ -6,8 +6,8 @@ import com.dust.core.task.Task;
 
 public abstract class AbstractTimeScheduleTask extends AbstractScheduleTask {
 
-    public AbstractTimeScheduleTask(Task task, long delayTime) {
-        super(task, delayTime, TimeAxis.getInstance());
+    public AbstractTimeScheduleTask(Task task, long initDelayTime, long delayTime) {
+        super(task, initDelayTime, delayTime, TimeAxis.getInstance());
     }
 
 }

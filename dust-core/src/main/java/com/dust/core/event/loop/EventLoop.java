@@ -18,11 +18,21 @@ public interface EventLoop {
     /**
      * 暂停事件循环
      */
-    void stop();
+    void pause();
+
+    /**
+     * 恢复事件循环
+     */
+    void resume();
 
     /**
      * 终止事件循环
      */
     void terminate();
+
+    /**
+     * 是否正在在执行
+     */
+    boolean isRunning();
 
 }

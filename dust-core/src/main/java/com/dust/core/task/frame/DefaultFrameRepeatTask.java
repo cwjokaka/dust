@@ -4,8 +4,8 @@ import com.dust.core.task.Task;
 
 public class DefaultFrameRepeatTask extends AbstractFrameRepeatTask {
 
-    public DefaultFrameRepeatTask(Task task, long delayTime, int repeatMaxCount) {
-        super(task, delayTime, repeatMaxCount);
+    public DefaultFrameRepeatTask(Task task, long initDelayFrame, long delayFrame, int repeatMaxCount) {
+        super(task, initDelayFrame, delayFrame, repeatMaxCount);
     }
 
     @Override

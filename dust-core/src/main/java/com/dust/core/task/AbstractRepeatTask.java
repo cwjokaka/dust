@@ -14,8 +14,8 @@ public abstract class AbstractRepeatTask extends AbstractScheduleTask implements
      */
     private int repeatCount = 0;
 
-    public AbstractRepeatTask(Task task, long delayTime, int repeatMaxCount, Axis axis) {
-        super(task, delayTime, axis);
+    public AbstractRepeatTask(Task task, long initDelay, long delay, int repeatMaxCount, Axis axis) {
+        super(task, initDelay, delay, axis);
         this.repeatMaxCount = repeatMaxCount;
     }
 

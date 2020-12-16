@@ -7,8 +7,8 @@ import com.dust.core.task.Task;
  */
 public class DefaultTimeDelayTask extends AbstractTimeDelayTask {
 
-    public DefaultTimeDelayTask(Task task, long delayTime) {
-        super(task, delayTime);
+    public DefaultTimeDelayTask(Task task, long initDelayTime, long delayTime) {
+        super(task, initDelayTime, delayTime);
     }
 
 }

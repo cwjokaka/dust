@@ -9,8 +9,8 @@ import com.dust.core.axis.TimeAxis;
  */
 public class AbstractTimeDelayTask extends AbstractDelayTask {
 
-    public AbstractTimeDelayTask(Task task, long delayTime) {
-        super(task, delayTime, TimeAxis.getInstance());
+    public AbstractTimeDelayTask(Task task, long initDelayTime, long delayTime) {
+        super(task, initDelayTime, delayTime, TimeAxis.getInstance());
     }
 
 }

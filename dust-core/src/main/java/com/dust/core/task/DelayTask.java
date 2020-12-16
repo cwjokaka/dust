@@ -15,7 +15,7 @@ public interface DelayTask extends Task, Terminable {
      * 是否可执行
      * @return 布尔值
      */
-    default boolean isExecutable() {
+    default boolean isRunnable() {
         return true;
     }
 

@@ -9,8 +9,8 @@ import com.dust.core.task.Task;
  */
 public abstract class AbstractTimeRepeatTask extends AbstractRepeatTask {
 
-    public AbstractTimeRepeatTask(Task task, long delayTime, int repeatMaxCount) {
-        super(task, delayTime, repeatMaxCount, TimeAxis.getInstance());
+    public AbstractTimeRepeatTask(Task task, long initDelayTime, long delayTime, int repeatMaxCount) {
+        super(task, initDelayTime, delayTime, repeatMaxCount, TimeAxis.getInstance());
     }
 
 }
