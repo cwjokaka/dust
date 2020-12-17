@@ -1,11 +1,11 @@
 package com.dust.core.task.frame;
 
-import com.dust.core.task.Task;
+import com.dust.core.task.param.ScheduleTaskParam;
 
 public class DefaultFrameScheduleTask extends AbstractFrameScheduleTask {
 
-    public DefaultFrameScheduleTask(Task task, long initDelayFrame, long delayFrame) {
-        super(task, initDelayFrame, delayFrame);
+    public DefaultFrameScheduleTask(ScheduleTaskParam param) {
+        super(param.getTask(), param.getInitDelay(), param.getDelay());
     }
 
 }

@@ -5,6 +5,9 @@ import com.dust.core.task.*;
 import com.dust.core.task.frame.DefaultFrameDelayTask;
 import com.dust.core.task.frame.DefaultFrameRepeatTask;
 import com.dust.core.task.frame.DefaultFrameScheduleTask;
+import com.dust.core.task.param.DelayTaskParam;
+import com.dust.core.task.param.RepeatTaskParam;
+import com.dust.core.task.param.ScheduleTaskParam;
 import com.dust.core.task.time.DefaultTimeDelayTask;
 import com.dust.core.task.time.DefaultTimeRepeatTask;
 import com.dust.core.task.time.DefaultTimeScheduleTask;
@@ -56,43 +59,40 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
         eventLoopThread.shutdown();
     }
 
-    public void submitTimeDelayTask(Task task, long initDelayTime, long delayTime) {
-        submitTimeDelayTask(task, initDelayTime, delayTime, TimeEnum.MILLISECOND);
+    public DelayTask submitTimeDelayTask(DelayTaskParam param) {
+        DefaultTimeDelayTask task = new DefaultTimeDelayTask(param);
+        taskTimePriorityQueue.add(task);
+        return task;
     }
 
-    public void submitTimeDelayTask(Task task, long delayTime) {
-        submitTimeDelayTask(task, delayTime, delayTime, TimeEnum.MILLISECOND);
+    public ScheduleTask submitTimeScheduleTask(ScheduleTaskParam param) {
+        DefaultTimeScheduleTask task = new DefaultTimeScheduleTask(param);
+        taskTimePriorityQueue.add(task);
+        return task;
     }
 
-    public void submitTimeDelayTask(Task task, long delayTime, TimeEnum timeEnum) {
-        submitTimeDelayTask(task, delayTime, delayTime, timeEnum);
+    public RepeatTask submitTimeRepeatTask(RepeatTaskParam param) {
+        DefaultTimeRepeatTask task = new DefaultTimeRepeatTask(param);
+        taskTimePriorityQueue.add(task);
+        return task;
     }
 
-    public void submitTimeDelayTask(Task task, long initDelayTime, long delayTime, TimeEnum timeEnum) {
-        taskTimePriorityQueue.add(new DefaultTimeDelayTask(
-                task,
-                initDelayTime * timeEnum.getOffset(),
-                delayTime * timeEnum.getOffset()));
+    public DelayTask submitFrameDelayTask(DelayTaskParam param) {
+        DefaultFrameDelayTask task = new DefaultFrameDelayTask(param);
+        taskFramePriorityQueue.add(task);
+        return task;
     }
 
-    public void submitTimeScheduleTask(Task task, long initDelayTime, long delayTime) {
-        taskTimePriorityQueue.add(new DefaultTimeScheduleTask(task, initDelayTime, delayTime));
+    public ScheduleTask submitFrameScheduleTask(ScheduleTaskParam param) {
+        DefaultFrameScheduleTask task = new DefaultFrameScheduleTask(param);
+        taskFramePriorityQueue.add(task);
+        return task;
     }
 
-    public void submitTimeRepeatTask(Task task, long initDelayTime, long delayTime, int repeatMaxCount) {
-        taskTimePriorityQueue.add(new DefaultTimeRepeatTask(task, initDelayTime, delayTime, repeatMaxCount));
-    }
-
-    public void submitFrameDelayTask(Task task, long delayTime) {
-        taskFramePriorityQueue.add(new DefaultFrameDelayTask(task, delayTime, delayTime));
-    }
-
-    public void submitFrameScheduleTask(Task task, long initDelayFrame, long delayFrame) {
-        taskFramePriorityQueue.add(new DefaultFrameScheduleTask(task, initDelayFrame, delayFrame));
-    }
-
-    public void submitFrameRepeatTask(Task task, long initDelayFrame, long delayFrame, int repeatMaxCount) {
-        taskFramePriorityQueue.add(new DefaultFrameRepeatTask(task, initDelayFrame, delayFrame, repeatMaxCount));
+    public RepeatTask submitFrameRepeatTask(RepeatTaskParam param) {
+        DefaultFrameRepeatTask task = new DefaultFrameRepeatTask(param);
+        taskFramePriorityQueue.add(task);
+        return task;
     }
 
     @Override
