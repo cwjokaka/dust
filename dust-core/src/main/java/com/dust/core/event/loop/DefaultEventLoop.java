@@ -25,9 +25,13 @@ import java.util.concurrent.TimeUnit;
 public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     /**
+     * 刷新频率
+     */
+    private final int fps;
+    /**
      * 执行事件循环的线程
      */
-    private final ScheduledExecutorService eventLoopThread = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledExecutorService eventLoopThread;
 
     /**
      * 基于时间的延时任务队列
@@ -49,14 +53,16 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
      */
     private final Queue<DelayTask> taskFrameQueue = new LinkedList<>();
 
-    @Override
-    public void run() {
-        eventLoopThread.scheduleWithFixedDelay(this::loop, 0, 16, TimeUnit.MILLISECONDS);
+    public DefaultEventLoop(int fps) {
+        this.fps = fps;
     }
 
     @Override
-    public void terminate() {
-        eventLoopThread.shutdown();
+    public void run() {
+        if (isRunning()) {
+            return;
+        }
+        rebuildEventLoopThread();
     }
 
     public DelayTask submitTimeDelayTask(DelayTaskParam param) {
@@ -135,6 +141,48 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
                 taskPriorityQueue.add(delayTask);
             }
         }
+    }
+
+    @Override
+    public void pause() {
+        super.pause();
+        eventLoopThread.shutdown();
+    }
+
+    @Override
+    public boolean isRunning() {
+        return super.isRunning() &&
+                eventLoopThread != null &&
+                !eventLoopThread.isShutdown() &&
+                !eventLoopThread.isTerminated();
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
+        run();
+    }
+
+    @Override
+    public void terminate() {
+        eventLoopThread.shutdown();
+    }
+
+
+    /**
+     * 根据FPS计算延时时间(微秒)
+     * @return 延时时间
+     */
+    private long calDelay() {
+        return 1000_000 / this.fps;
+    }
+
+    /**
+     * 重新构建事件循环线程
+     */
+    private void rebuildEventLoopThread() {
+        eventLoopThread = Executors.newSingleThreadScheduledExecutor();
+        eventLoopThread.scheduleWithFixedDelay(this::loop, 0, calDelay(), TimeUnit.MICROSECONDS);
     }
 
 }

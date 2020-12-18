@@ -1,5 +1,7 @@
 package com.dust.core.event.loop;
 
+import java.util.Collections;
+
 /**
  * 事件循环
  */
@@ -21,18 +23,23 @@ public interface EventLoop {
     void pause();
 
     /**
-     * 恢复事件循环
+     * 从暂停{@link EventLoop#pause()}恢复事件循环
      */
     void resume();
 
     /**
-     * 终止事件循环
+     * 终止事件循环，并且无法使用{@link EventLoop#resume()}恢复
      */
     void terminate();
 
     /**
-     * 是否正在在执行
+     * 是否正在运行
      */
     boolean isRunning();
+
+    /**
+     * 是否已被终止
+     */
+    boolean isTerminated();
 
 }

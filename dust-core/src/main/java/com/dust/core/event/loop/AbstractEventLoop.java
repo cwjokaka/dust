@@ -8,6 +8,7 @@ import com.dust.core.sys.FrameSystem;
 public abstract class AbstractEventLoop implements EventLoop {
 
     private boolean isRunning = true;
+    private boolean isTerminate = false;
 
     @Override
     public void loop() {
@@ -56,4 +57,8 @@ public abstract class AbstractEventLoop implements EventLoop {
         return isRunning;
     }
 
+    @Override
+    public boolean isTerminated() {
+        return isTerminate;
+    }
 }

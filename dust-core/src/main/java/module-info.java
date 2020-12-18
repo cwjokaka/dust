@@ -4,4 +4,5 @@ module dust.core {
     exports com.dust.core.sys;
     exports com.dust.core.task;
     exports com.dust.core.task.param;
+    exports com.dust.core.scene;
 }
