@@ -1,8 +1,8 @@
 package com.dust.core.event;
 
 @FunctionalInterface
-public interface EventHandler {
+public interface EventHandler<T extends Event> {
 
-    void handle(Event event);
+    void handle(T event);
 
 }
