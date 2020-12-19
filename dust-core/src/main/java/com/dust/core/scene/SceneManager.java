@@ -1,6 +1,6 @@
 package com.dust.core.scene;
 
-import com.dust.core.event.loop.EventLoop;
+import com.dust.core.event.EventLoop;
 
 public interface SceneManager {
 

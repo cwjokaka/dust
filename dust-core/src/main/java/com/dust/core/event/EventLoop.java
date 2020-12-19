@@ -1,6 +1,4 @@
-package com.dust.core.event.loop;
-
-import java.util.Collections;
+package com.dust.core.event;
 
 /**
  * 事件循环

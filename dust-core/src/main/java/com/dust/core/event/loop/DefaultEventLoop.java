@@ -1,6 +1,7 @@
 package com.dust.core.event.loop;
 
 import com.dust.core.enums.TimeEnum;
+import com.dust.core.event.Event;
 import com.dust.core.task.*;
 import com.dust.core.task.frame.DefaultFrameDelayTask;
 import com.dust.core.task.frame.DefaultFrameRepeatTask;
@@ -12,6 +13,7 @@ import com.dust.core.task.time.DefaultTimeDelayTask;
 import com.dust.core.task.time.DefaultTimeRepeatTask;
 import com.dust.core.task.time.DefaultTimeScheduleTask;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -25,9 +27,10 @@ import java.util.concurrent.TimeUnit;
 public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     /**
-     * 刷新频率
+     * 刷新周期(微秒)
      */
-    private final int fps;
+    private final long refreshCycle;
+
     /**
      * 执行事件循环的线程
      */
@@ -53,8 +56,9 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
      */
     private final Queue<DelayTask> taskFrameQueue = new LinkedList<>();
 
-    public DefaultEventLoop(int fps) {
-        this.fps = fps;
+
+    public DefaultEventLoop(long refreshCycle) {
+        this.refreshCycle = refreshCycle;
     }
 
     @Override
@@ -168,21 +172,12 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
         eventLoopThread.shutdown();
     }
 
-
-    /**
-     * 根据FPS计算延时时间(微秒)
-     * @return 延时时间
-     */
-    private long calDelay() {
-        return 1000_000 / this.fps;
-    }
-
     /**
      * 重新构建事件循环线程
      */
     private void rebuildEventLoopThread() {
         eventLoopThread = Executors.newSingleThreadScheduledExecutor();
-        eventLoopThread.scheduleWithFixedDelay(this::loop, 0, calDelay(), TimeUnit.MICROSECONDS);
+        eventLoopThread.scheduleWithFixedDelay(this::loop, 0, refreshCycle, TimeUnit.MICROSECONDS);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.dust.core.event.loop;
 
+import com.dust.core.event.EventLoop;
 import com.dust.core.sys.FrameSystem;
 
 /**
