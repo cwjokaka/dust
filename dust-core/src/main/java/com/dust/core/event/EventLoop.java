@@ -30,14 +30,4 @@ public interface EventLoop {
      */
     void terminate();
 
-    /**
-     * 是否正在运行
-     */
-    boolean isRunning();
-
-    /**
-     * 是否已被终止
-     */
-    boolean isTerminated();
-
 }

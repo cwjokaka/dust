@@ -1,7 +1,5 @@
 package com.dust.core.event.loop;
 
-import com.dust.core.enums.TimeEnum;
-import com.dust.core.event.Event;
 import com.dust.core.task.*;
 import com.dust.core.task.frame.DefaultFrameDelayTask;
 import com.dust.core.task.frame.DefaultFrameRepeatTask;
@@ -63,9 +61,6 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     @Override
     public void run() {
-        if (isRunning()) {
-            return;
-        }
         rebuildEventLoopThread();
     }
 
@@ -149,22 +144,12 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
 
     @Override
     public void pause() {
-        super.pause();
         eventLoopThread.shutdown();
     }
 
     @Override
-    public boolean isRunning() {
-        return super.isRunning() &&
-                eventLoopThread != null &&
-                !eventLoopThread.isShutdown() &&
-                !eventLoopThread.isTerminated();
-    }
-
-    @Override
     public void resume() {
-        super.resume();
-        run();
+        rebuildEventLoopThread();
     }
 
     @Override

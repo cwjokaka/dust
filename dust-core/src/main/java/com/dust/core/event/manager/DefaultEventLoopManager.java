@@ -15,16 +15,6 @@ import java.util.concurrent.TimeUnit;
 public class DefaultEventLoopManager implements EventLoopManager {
 
     /**
-     * 刷新周期(微秒)
-     */
-    private final long refreshCycle;
-
-    /**
-     * 执行事件循环的线程
-     */
-    private ScheduledExecutorService eventLoopThread = Executors.newSingleThreadScheduledExecutor();
-
-    /**
      * 事件循环栈
      */
     private final Deque<NameableEventLoop> eventLoopStack = new LinkedList<>();
@@ -34,9 +24,6 @@ public class DefaultEventLoopManager implements EventLoopManager {
      */
     private final Map<String, NameableEventLoop> eventLoopMap = new HashMap<>();
 
-    public DefaultEventLoopManager(long refreshCycle) {
-        this.refreshCycle = refreshCycle;
-    }
 
     @Override
     public void pushEventLoop(NameableEventLoop eventLoop) {
@@ -73,7 +60,7 @@ public class DefaultEventLoopManager implements EventLoopManager {
     }
 
     private void pauseCurrentEventLoop() {
-        eventLoopThread.shutdown();
+        currentEventLoop().pause();
     }
 
     private EventLoop currentEventLoop() {
@@ -81,20 +68,11 @@ public class DefaultEventLoopManager implements EventLoopManager {
     }
 
     private void runCurrentEventLoop() {
-        rebuildEventLoopThread();
+        currentEventLoop().run();
     }
 
     private void resumeCurrentEventLoop() {
-        rebuildEventLoopThread();
+        currentEventLoop().resume();
     }
-
-    /**
-     * 重新构建事件循环线程
-     */
-    private void rebuildEventLoopThread() {
-        eventLoopThread = Executors.newSingleThreadScheduledExecutor();
-        eventLoopThread.scheduleWithFixedDelay(currentEventLoop()::loop, 0, refreshCycle, TimeUnit.MICROSECONDS);
-    }
-
 
 }

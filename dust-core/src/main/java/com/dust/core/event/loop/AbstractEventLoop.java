@@ -8,16 +8,11 @@ import com.dust.core.sys.FrameSystem;
  */
 public abstract class AbstractEventLoop implements EventLoop {
 
-    private boolean isRunning = true;
-    private boolean isTerminate = false;
-
     @Override
     public void loop() {
-        if (isRunning()) {
-            executeLogic();
-            runAllTasks();
-            render();
-        }
+        executeLogic();
+        runAllTasks();
+        render();
     }
 
     /**
@@ -43,23 +38,4 @@ public abstract class AbstractEventLoop implements EventLoop {
      */
     protected abstract void runAllTasks();
 
-    @Override
-    public void pause() {
-        this.isRunning = false;
-    }
-
-    @Override
-    public void resume() {
-        this.isRunning = true;
-    }
-
-    @Override
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    @Override
-    public boolean isTerminated() {
-        return isTerminate;
-    }
 }
