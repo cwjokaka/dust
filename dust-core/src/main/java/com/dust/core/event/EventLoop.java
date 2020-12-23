@@ -11,11 +11,6 @@ public interface EventLoop {
     void run();
 
     /**
-     * 执行单次循环的内容
-     */
-    void loop();
-
-    /**
      * 暂停事件循环
      */
     void pause();

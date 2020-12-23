@@ -4,6 +4,9 @@ import com.dust.core.event.loop.DefaultEventLoop;
 
 public class SceneEventLoop extends DefaultEventLoop {
 
+    /**
+     * 当前要渲染的场景
+     */
     private Scene currentScene;
 
     public SceneEventLoop(long refreshCycle) {
@@ -13,16 +16,16 @@ public class SceneEventLoop extends DefaultEventLoop {
     public void switchTo(Scene scene) {
         pause();
         this.currentScene = scene;
-        run();
+        resume();
     }
 
     @Override
     public void executeEachFrame() {
-        currentScene.loop();
+        currentScene.executeInEachFrame();
     }
 
     @Override
-    public void render() {
+    protected void afterLoop() {
         currentScene.render();
     }
 

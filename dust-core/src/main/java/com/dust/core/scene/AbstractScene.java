@@ -23,28 +23,4 @@ public abstract class AbstractScene implements Scene {
         return this.name;
     }
 
-    @Override
-    public void run() {
-
-    }
-
-    @Override
-    public void loop() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void terminate() {
-
-    }
 }

@@ -8,11 +8,13 @@ import com.dust.core.sys.FrameSystem;
  */
 public abstract class AbstractEventLoop implements EventLoop {
 
-    @Override
-    public void loop() {
+    /**
+     * 单次循环的内容
+     */
+    protected void loop() {
         executeLogic();
         runAllTasks();
-        render();
+        processAllEvents();
     }
 
     /**
@@ -29,13 +31,13 @@ public abstract class AbstractEventLoop implements EventLoop {
     protected abstract void executeEachFrame();
 
     /**
-     * 渲染画面
-     */
-    protected abstract void render();
-
-    /**
      * 执行所有就绪的任务
      */
     protected abstract void runAllTasks();
+
+    /**
+     * 处理所有就绪的事件
+     */
+    protected abstract void processAllEvents();
 
 }

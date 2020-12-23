@@ -3,12 +3,12 @@ package com.dust.core.scene;
 import java.util.*;
 
 /**
- * 场景管理器
+ * 舞台
  */
-public class DefaultSceneManager implements SceneManager {
+public class DefaultStage implements SceneManager {
 
     /**
-     * 执行场景事件循环的线程
+     * 事件循环
      */
     private final SceneEventLoop sceneEventLoop;
 
@@ -22,7 +22,7 @@ public class DefaultSceneManager implements SceneManager {
      */
     private final Map<String, Scene> sceneMap = new HashMap<>();
 
-    public DefaultSceneManager(int fps) {
+    public DefaultStage(int fps) {
         this.sceneEventLoop = new SceneEventLoop(calRefreshCycle(fps));
     }
 
@@ -61,14 +61,15 @@ public class DefaultSceneManager implements SceneManager {
             return;
         }
         pauseCurrentEventLoop();
-        Scene remove = sceneMap.remove(sceneName);
-        sceneStack.remove(remove);
+        Scene top = sceneMap.get(sceneName);
+        sceneStack.remove(top);
+        sceneStack.push(top);
         sceneEventLoop.switchTo(currentScene());
         resumeCurrentScene();
     }
 
     private void pauseCurrentEventLoop() {
-        currentScene().pause();
+        sceneEventLoop.pause();
     }
 
     private Scene currentScene() {
@@ -76,11 +77,11 @@ public class DefaultSceneManager implements SceneManager {
     }
 
     private void runCurrentScene() {
-        currentScene().run();
+        sceneEventLoop.run();
     }
 
     private void resumeCurrentScene() {
-        currentScene().resume();
+        sceneEventLoop.resume();
     }
 
 
