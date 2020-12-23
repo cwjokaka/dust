@@ -9,7 +9,7 @@ import com.dust.core.sys.FrameSystem;
 public abstract class AbstractEventLoop implements EventLoop {
 
     /**
-     * 单次循环的内容
+     * 单次主循环的内容
      */
     protected void loop() {
         executeLogic();

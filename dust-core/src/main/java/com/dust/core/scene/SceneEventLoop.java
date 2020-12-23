@@ -5,7 +5,7 @@ import com.dust.core.event.loop.DefaultEventLoop;
 public class SceneEventLoop extends DefaultEventLoop {
 
     /**
-     * 当前要渲染的场景
+     * 当前要执行和渲染的场景
      */
     private Scene currentScene;
 

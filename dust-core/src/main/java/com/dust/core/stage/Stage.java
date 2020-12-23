@@ -1,9 +1,11 @@
-package com.dust.core.scene;
+package com.dust.core.stage;
 
-import com.dust.core.event.EventLoop;
-import com.dust.core.event.NameableEventLoop;
+import com.dust.core.scene.Scene;
 
-public interface SceneManager {
+/**
+ * 舞台接口
+ */
+public interface Stage {
 
     /**
      * 场景入栈
@@ -18,7 +20,7 @@ public interface SceneManager {
 
     /**
      * 跳转到某个事件循环
-     * @param sceneName 场景{@link NameableEventLoop}的名称
+     * @param sceneName 场景的名称
      */
     void navigateTo(String sceneName);
 

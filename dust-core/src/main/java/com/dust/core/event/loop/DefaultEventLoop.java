@@ -69,8 +69,14 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
         afterLoop();
     }
 
+    /**
+     * 进行主循环前的方法
+     */
     protected void beforeLoop() {}
 
+    /**
+     * 进行主循环后执行的方法
+     */
     protected void afterLoop() {}
 
     /**

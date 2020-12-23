@@ -1,7 +1,5 @@
 package com.dust.core.scene;
 
-import com.dust.core.event.NameableEventLoop;
-
 /**
  * 场景接口
  */

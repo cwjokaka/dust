@@ -1,4 +1,7 @@
-package com.dust.core.scene;
+package com.dust.core.stage;
+
+import com.dust.core.scene.Scene;
+import com.dust.core.scene.SceneEventLoop;
 
 import java.util.*;
 
@@ -35,11 +38,9 @@ public class DefaultStage implements SceneManager {
         if (sceneMap.containsKey(scene.getName())) {
             return;
         }
-        pauseCurrentEventLoop();
         sceneMap.put(scene.getName(), scene);
         sceneEventLoop.switchTo(scene);
         sceneStack.push(scene);
-        runCurrentScene();
     }
 
     @Override
@@ -47,11 +48,9 @@ public class DefaultStage implements SceneManager {
         if (sceneStack.isEmpty()) {
             return null;
         }
-        pauseCurrentEventLoop();
         Scene pop = sceneStack.pop();
         sceneMap.remove(pop.getName());
         sceneEventLoop.switchTo(currentScene());
-        resumeCurrentScene();
         return pop;
     }
 
@@ -60,28 +59,14 @@ public class DefaultStage implements SceneManager {
         if (!sceneMap.containsKey(sceneName)) {
             return;
         }
-        pauseCurrentEventLoop();
         Scene top = sceneMap.get(sceneName);
         sceneStack.remove(top);
         sceneStack.push(top);
         sceneEventLoop.switchTo(currentScene());
-        resumeCurrentScene();
-    }
-
-    private void pauseCurrentEventLoop() {
-        sceneEventLoop.pause();
     }
 
     private Scene currentScene() {
         return sceneStack.peekLast();
-    }
-
-    private void runCurrentScene() {
-        sceneEventLoop.run();
-    }
-
-    private void resumeCurrentScene() {
-        sceneEventLoop.resume();
     }
 
 
