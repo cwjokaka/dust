@@ -7,16 +7,14 @@ public class SceneEventLoop extends DefaultEventLoop {
     /**
      * 当前要执行和渲染的场景
      */
-    private Scene currentScene;
+    private volatile Scene currentScene;
 
     public SceneEventLoop(long refreshCycle) {
         super(refreshCycle);
     }
 
     public void switchTo(Scene scene) {
-        pause();
         this.currentScene = scene;
-        resume();
     }
 
     @Override

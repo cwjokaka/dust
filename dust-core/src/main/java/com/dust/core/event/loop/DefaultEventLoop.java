@@ -83,8 +83,16 @@ public abstract class DefaultEventLoop extends AbstractEventLoop {
      * 重新构建事件循环线程
      */
     private void rebuildEventLoopThread() {
+        if (eventLoopThread != null && !eventLoopThread.isShutdown()) {
+            return;
+        }
         eventLoopThread = Executors.newSingleThreadScheduledExecutor();
-        eventLoopThread.scheduleWithFixedDelay(this::onLoop, 0, refreshCycle, TimeUnit.MICROSECONDS);
+        eventLoopThread.scheduleWithFixedDelay(
+                this::onLoop,
+                0,
+                refreshCycle,
+                TimeUnit.MICROSECONDS
+        );
     }
 
     public DelayTask submitTimeDelayTask(DelayTaskParam param) {

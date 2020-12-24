@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * 舞台
  */
-public class DefaultStage implements SceneManager {
+public class DefaultStage implements Stage {
 
     /**
      * 事件循环
@@ -40,6 +40,7 @@ public class DefaultStage implements SceneManager {
         }
         sceneMap.put(scene.getName(), scene);
         sceneEventLoop.switchTo(scene);
+        sceneEventLoop.run();
         sceneStack.push(scene);
     }
 
@@ -66,7 +67,7 @@ public class DefaultStage implements SceneManager {
     }
 
     private Scene currentScene() {
-        return sceneStack.peekLast();
+        return sceneStack.peekFirst();
     }
 
 
