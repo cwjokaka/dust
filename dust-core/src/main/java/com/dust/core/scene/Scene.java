@@ -17,6 +17,4 @@ public interface Scene {
 
     String getName();
 
-    void setName(String name);
-
 }

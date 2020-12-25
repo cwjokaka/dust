@@ -2,7 +2,7 @@ package com.dust.core.scene;
 
 public abstract class DefaultScene implements Scene {
 
-    private String name;
+    private final String name;
 
     public DefaultScene(String name) {
         this.name = name;
@@ -11,11 +11,6 @@ public abstract class DefaultScene implements Scene {
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
