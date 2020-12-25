@@ -5,6 +5,10 @@ package com.dust.core.event;
  */
 public interface Event {
 
-
+    /**
+     * 获取事件的关联实体
+     * @return 实体
+     */
+    Object getObject();
 
 }
