@@ -6,6 +6,6 @@ package com.dust.core.event;
 @FunctionalInterface
 public interface EventListener {
 
-    void listen(Event event);
+    void listen(Event<?> event);
 
 }

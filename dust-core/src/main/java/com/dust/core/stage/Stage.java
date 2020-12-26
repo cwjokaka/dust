@@ -19,7 +19,7 @@ public interface Stage {
     Scene popScene();
 
     /**
-     * 跳转到某个事件循环
+     * 跳转到某个场景
      * @param sceneName 场景的名称
      */
     void navigateTo(String sceneName);
