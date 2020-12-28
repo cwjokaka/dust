@@ -5,14 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <dust.version>1.0.0</dust.version>
+        <dust.version>1.0-SNAPSHOT</dust.version>
         <java.version>11</java.version>
-
     </properties>
 
     <artifactId>dust</artifactId>
     <groupId>com.ls</groupId>
-    <version>${dust.version}</version>
+    <version>1.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
     <modules>

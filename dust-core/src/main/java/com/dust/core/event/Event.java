@@ -11,8 +11,4 @@ public interface Event<T> {
      */
     T getObject();
 
-    /**
-     * 是否能继续执行
-     */
-    boolean canMao();
 }

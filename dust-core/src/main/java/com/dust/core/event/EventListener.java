@@ -4,9 +4,9 @@ package com.dust.core.event;
  * 事件监听器
  */
 @FunctionalInterface
-public interface EventListener {
+public interface EventListener<T> {
 
-    <T> void listen(Event<T> event);
+    void listen(Event<T> event);
 
     /**
      * 是否可重用

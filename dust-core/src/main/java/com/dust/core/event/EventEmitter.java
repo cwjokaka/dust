@@ -14,7 +14,7 @@ public class EventEmitter {
      * @param eventName 事件名称
      * @param eventListener 监听器
      */
-    public void on(String eventName, EventListener eventListener) {
+    public <T> void on(String eventName, EventListener<T> eventListener) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             listeners = new LinkedList<>();
@@ -28,7 +28,7 @@ public class EventEmitter {
      * @param eventName 事件名称
      * @param eventListener 监听器
      */
-    public void once(String eventName, OnceEventListener eventListener) {
+    public <T> void once(String eventName, OnceEventListener<T> eventListener) {
         on(eventName, eventListener);
     }
 
@@ -39,7 +39,7 @@ public class EventEmitter {
      * @param eventName 事件名称
      * @param eventListener 监听器
      */
-    public void off(String eventName, EventListener eventListener) {
+    public <T> void off(String eventName, EventListener<T> eventListener) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             return;
