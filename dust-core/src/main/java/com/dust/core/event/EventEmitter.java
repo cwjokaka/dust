@@ -24,11 +24,11 @@ public class EventEmitter {
     }
 
     /**
-     * 注册事件
+     * 注册一次性事件
      * @param eventName 事件名称
      * @param eventListener 监听器
      */
-    public void once(String eventName, OnceEventListener<?> eventListener) {
+    public void once(String eventName, OnceEventListener eventListener) {
         on(eventName, eventListener);
     }
 
@@ -60,7 +60,7 @@ public class EventEmitter {
         while (iterator.hasNext()) {
             EventListener listener = iterator.next();
             listener.listen(event);
-            if (listener instanceof OnceEventListener) {
+            if (!listener.reusable()) {
                 iterator.remove();
             }
         }
