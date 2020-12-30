@@ -10,4 +10,12 @@ public interface ScheduleTask extends DelayTask {
      */
     void refreshTime();
 
+    /**
+     * 是否可重复
+     */
+    default boolean isRepeatable() {
+        return true;
+    }
+
+
 }

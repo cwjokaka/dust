@@ -123,7 +123,7 @@ public class DefaultScheduler implements Scheduler {
                 continue;
             }
             delayTask.run();
-            if (delayTask instanceof ScheduleTask) {
+            if (delayTask.isRepeatable()) {
                 ((ScheduleTask) delayTask).refreshTime();
                 taskPriorityQueue.add(delayTask);
             }

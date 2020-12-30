@@ -19,4 +19,11 @@ public interface DelayTask extends Task, Terminable {
         return true;
     }
 
+    /**
+     * 是否可重复
+     */
+    default boolean isRepeatable() {
+        return false;
+    }
+
 }
