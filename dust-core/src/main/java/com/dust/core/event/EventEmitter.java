@@ -18,7 +18,7 @@ public class EventEmitter {
      * @param eventName 事件名称
      * @param eventListener 监听器
      */
-    public void on(String eventName, EventListener eventListener) {
+    public <T> void on(String eventName, EventListener<T> eventListener) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             listeners = new LinkedList<>();
@@ -32,7 +32,7 @@ public class EventEmitter {
      * @param eventName 事件名称
      * @param eventListener 监听器
      */
-    public void once(String eventName, OnceEventListener eventListener) {
+    public <T> void once(String eventName, OnceEventListener<T> eventListener) {
         on(eventName, eventListener);
     }
 
@@ -41,7 +41,7 @@ public class EventEmitter {
      * @param eventName 事件名称
      * @param eventListener 监听器
      */
-    public void off(String eventName, EventListener eventListener) {
+    public <T> void off(String eventName, EventListener<T> eventListener) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             return;
@@ -64,7 +64,7 @@ public class EventEmitter {
      * 触发事件
      * @param eventName 事件名称
      */
-    public void emit(String eventName, Event event) {
+    public <T> void emit(String eventName, Event<T> event) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             return;
@@ -72,7 +72,7 @@ public class EventEmitter {
         Iterator<EventListener> iterator = listeners.iterator();
         while (iterator.hasNext()) {
             EventListener listener = iterator.next();
-            listener.listen(event);
+            listener.handle(event);
             if (!listener.reusable()) {
                 iterator.remove();
             }

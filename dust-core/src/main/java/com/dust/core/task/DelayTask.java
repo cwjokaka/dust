@@ -15,14 +15,14 @@ public interface DelayTask extends Task, Terminable {
      * 是否可执行
      * @return 布尔值
      */
-    default boolean isRunnable() {
+    default boolean runnable() {
         return true;
     }
 
     /**
      * 是否可重复
      */
-    default boolean isRepeatable() {
+    default boolean repeatable() {
         return false;
     }
 

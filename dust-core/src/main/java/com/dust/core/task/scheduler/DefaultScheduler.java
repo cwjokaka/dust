@@ -118,12 +118,12 @@ public class DefaultScheduler implements Scheduler {
             if (delayTask.isTerminated()) {
                 continue;
             }
-            if (!delayTask.isRunnable()) {
+            if (!delayTask.runnable()) {
                 taskPriorityQueue.add(delayTask);
                 continue;
             }
             delayTask.run();
-            if (delayTask.isRepeatable()) {
+            if (delayTask.repeatable()) {
                 ((ScheduleTask) delayTask).refreshTime();
                 taskPriorityQueue.add(delayTask);
             }
