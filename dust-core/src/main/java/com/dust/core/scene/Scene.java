@@ -15,6 +15,9 @@ public interface Scene {
      */
     void render();
 
+    /**
+     * @return 场景名称
+     */
     String getName();
 
 }

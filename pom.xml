@@ -7,6 +7,7 @@
     <properties>
         <dust.version>1.0-SNAPSHOT</dust.version>
         <java.version>11</java.version>
+        <javafx.version>14</javafx.version>
     </properties>
 
     <artifactId>dust</artifactId>
@@ -19,7 +20,41 @@
         <module>dust-actor</module>
         <module>dust-net</module>
         <module>dust-graphics</module>
+        <module>dust-launcher</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-fxml</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-graphics</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-base</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-controls</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

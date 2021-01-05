@@ -25,12 +25,17 @@ public class DefaultStage implements Stage {
      */
     private final Map<String, Scene> sceneMap = new HashMap<>();
 
+    /**
+     * 1秒对应的微秒数
+     */
+    private static final long SECOND_TO_MICROSECOND = 1000_000;
+
     public DefaultStage(int fps) {
         this.sceneEventLoop = new SceneEventLoop(calRefreshCycle(fps));
     }
 
     private long calRefreshCycle(int fps) {
-        return 1000_000 / fps;
+        return SECOND_TO_MICROSECOND / fps;
     }
 
     @Override
