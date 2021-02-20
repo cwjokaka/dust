@@ -8,6 +8,9 @@
         <dust.version>1.0-SNAPSHOT</dust.version>
         <java.version>11</java.version>
         <javafx.version>14</javafx.version>
+        <lombok.version>1.18.16</lombok.version>
+        <junit.version>4.13</junit.version>
+        <dust.common.version>1.0-SNAPSHOT</dust.common.version>
     </properties>
 
     <artifactId>dust</artifactId>
@@ -21,10 +24,16 @@
         <module>dust-net</module>
         <module>dust-graphics</module>
         <module>dust-launcher</module>
+        <module>dust-common</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.ls</groupId>
+                <artifactId>dust-common</artifactId>
+                <version>${dust.common.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
             <dependency>
                 <groupId>org.openjfx</groupId>
@@ -32,26 +41,38 @@
                 <version>${javafx.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-graphics</artifactId>
                 <version>${javafx.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-base</artifactId>
                 <version>${javafx.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
                 <version>${javafx.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
