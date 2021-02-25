@@ -2,6 +2,9 @@ package com.dust.launcher;
 
 import com.ls.dust.common.ReflectionUtils;
 
+/**
+ * 启动器
+ */
 public abstract class GameApplication {
 
     public static void launch() {

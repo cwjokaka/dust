@@ -11,6 +11,7 @@
         <lombok.version>1.18.16</lombok.version>
         <junit.version>4.13</junit.version>
         <dust.common.version>1.0-SNAPSHOT</dust.common.version>
+        <dust.core.version>1.0-SNAPSHOT</dust.core.version>
     </properties>
 
     <artifactId>dust</artifactId>
@@ -33,6 +34,11 @@
                 <groupId>com.ls</groupId>
                 <artifactId>dust-common</artifactId>
                 <version>${dust.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ls</groupId>
+                <artifactId>dust-core</artifactId>
+                <version>${dust.core.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
             <dependency>
@@ -63,7 +69,6 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
-<!--                <scope>provided</scope>-->
             </dependency>
 
             <dependency>
