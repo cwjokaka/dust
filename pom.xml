@@ -9,7 +9,7 @@
         <java.version>11</java.version>
         <javafx.version>14</javafx.version>
         <lombok.version>1.18.16</lombok.version>
-        <junit.version>4.13</junit.version>
+        <junit.version>[4.13.1,)</junit.version>
         <dust.common.version>1.0-SNAPSHOT</dust.common.version>
         <dust.core.version>1.0-SNAPSHOT</dust.core.version>
     </properties>
