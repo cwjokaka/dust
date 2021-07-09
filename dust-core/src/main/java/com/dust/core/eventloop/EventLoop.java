@@ -1,4 +1,6 @@
-package com.dust.core.event;
+package com.dust.core.eventloop;
+
+import com.dust.core.task.Task;
 
 /**
  * 事件循环

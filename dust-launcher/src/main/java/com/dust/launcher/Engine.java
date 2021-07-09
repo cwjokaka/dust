@@ -1,5 +1,6 @@
 package com.dust.launcher;
 
+import com.dust.core.scene.Scene;
 import com.dust.core.stage.Stage;
 
 public class Engine {
@@ -10,8 +11,12 @@ public class Engine {
         this.stage = stage;
     }
 
-    public void startLoop() {
-//        stage.pushScene();
+    public void start() {
+        stage.start();
+    }
+
+    public void startLoop(Scene scene) {
+        stage.pushScene(scene);
     }
 
 }

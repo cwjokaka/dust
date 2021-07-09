@@ -1,17 +1,17 @@
 package com.dust.core.task.time;
 
-import com.dust.core.task.param.DelayTaskParam;
+import com.dust.core.task.Task;
 
 /**
  * 默认基于时间的延时任务
  */
 public class DefaultTimeDelayTask extends AbstractTimeDelayTask {
 
-    public DefaultTimeDelayTask(DelayTaskParam delayTaskParam) {
+    public DefaultTimeDelayTask(Task task, long timeDelay) {
         super(
-                delayTaskParam.getTask(),
-                delayTaskParam.getDelay() * delayTaskParam.getTimeEnum().getOffset(),
-                delayTaskParam.getDelay() * delayTaskParam.getTimeEnum().getOffset()
+                task,
+                timeDelay,
+                timeDelay
         );
     }
 

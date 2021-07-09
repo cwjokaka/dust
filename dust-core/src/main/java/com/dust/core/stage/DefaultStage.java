@@ -39,6 +39,11 @@ public class DefaultStage implements Stage {
     }
 
     @Override
+    public void start() {
+        sceneEventLoop.run();
+    }
+
+    @Override
     public void pushScene(Scene scene) {
         if (sceneMap.containsKey(scene.getName())) {
             return;

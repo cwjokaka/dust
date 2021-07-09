@@ -2,6 +2,7 @@ package com.dust.core.axis;
 
 /**
  * 时间轴
+ * @author LENOVO
  */
 public interface Axis {
 

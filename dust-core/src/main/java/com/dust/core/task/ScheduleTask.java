@@ -6,16 +6,10 @@ package com.dust.core.task;
 public interface ScheduleTask extends DelayTask {
 
     /**
-     * 刷新下次执行的时间
-     */
-    void refreshTime();
-
-    /**
      * 是否可重复
      */
     default boolean repeatable() {
         return true;
     }
-
 
 }

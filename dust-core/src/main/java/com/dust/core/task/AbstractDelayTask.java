@@ -30,6 +30,11 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     protected long nextExecuteTime;
 
     /**
+     * 已执行次数
+     */
+    protected long executedTimes = 0;
+
+    /**
      * 时间轴,用于判断和计算不同维度的时间
      */
     protected final Axis axis;
@@ -51,6 +56,12 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
     @Override
     public void run() {
         task.run();
+        executedTimes++;
+    }
+
+    @Override
+    public void resetTime() {
+        this.nextExecuteTime = axis.refreshTime(delay);
     }
 
     @Override
@@ -73,4 +84,8 @@ public abstract class AbstractDelayTask implements DelayTask, Comparable<Abstrac
         return axis.isTimeUp(nextExecuteTime);
     }
 
+    @Override
+    public long getExecutedTimes() {
+        return executedTimes;
+    }
 }

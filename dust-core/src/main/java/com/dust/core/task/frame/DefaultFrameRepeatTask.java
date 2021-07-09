@@ -1,11 +1,11 @@
 package com.dust.core.task.frame;
 
-import com.dust.core.task.param.RepeatTaskParam;
+import com.dust.core.task.Task;
 
 public class DefaultFrameRepeatTask extends AbstractFrameRepeatTask {
 
-    public DefaultFrameRepeatTask(RepeatTaskParam param) {
-        super(param.getTask(), param.getInitDelay(), param.getDelay(), param.getRepeatCount());
+    public DefaultFrameRepeatTask(Task task, long initLoopDelay, long loopDelay, int repeatCount) {
+        super(task, initLoopDelay, loopDelay, repeatCount);
     }
 
     @Override

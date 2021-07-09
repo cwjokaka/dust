@@ -1,14 +1,14 @@
 package com.dust.core.task.time;
 
-import com.dust.core.task.param.ScheduleTaskParam;
+import com.dust.core.task.Task;
 
 public class DefaultTimeScheduleTask extends AbstractTimeScheduleTask {
 
-    public DefaultTimeScheduleTask(ScheduleTaskParam param) {
+    public DefaultTimeScheduleTask(Task task, long initTimeDelay, long timeDelay) {
         super(
-                param.getTask(),
-                param.getInitDelay() * param.getTimeEnum().getOffset(),
-                param.getDelay() * param.getTimeEnum().getOffset()
+                task,
+                initTimeDelay,
+                timeDelay
         );
     }
 

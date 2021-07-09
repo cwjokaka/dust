@@ -8,6 +8,11 @@ import com.dust.core.scene.Scene;
 public interface Stage {
 
     /**
+     * 开启事件循环
+     */
+    void start();
+
+    /**
      * 场景入栈
      * @param scene 场景
      */

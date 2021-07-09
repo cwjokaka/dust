@@ -1,11 +1,11 @@
 package com.dust.core.task.frame;
 
-import com.dust.core.task.param.DelayTaskParam;
+import com.dust.core.task.Task;
 
 public class DefaultFrameDelayTask extends AbstractFrameDelayTask {
 
-    public DefaultFrameDelayTask(DelayTaskParam param) {
-        super(param.getTask(), param.getDelay(), param.getDelay());
+    public DefaultFrameDelayTask(Task task, long loopDelay) {
+        super(task, loopDelay, loopDelay);
     }
 
 }

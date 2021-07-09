@@ -1,15 +1,15 @@
 package com.dust.core.task.time;
 
-import com.dust.core.task.param.RepeatTaskParam;
+import com.dust.core.task.Task;
 
 public class DefaultTimeRepeatTask extends AbstractTimeRepeatTask {
 
-    public DefaultTimeRepeatTask(RepeatTaskParam param) {
+    public DefaultTimeRepeatTask(Task task, int repeatCount, long initDelay, long timeDelay) {
         super(
-                param.getTask(),
-                param.getInitDelay() * param.getTimeEnum().getOffset(),
-                param.getDelay() * param.getTimeEnum().getOffset(),
-                param.getRepeatCount()
+                task,
+                initDelay,
+                timeDelay,
+                repeatCount
         );
     }
 

@@ -1,12 +1,13 @@
-package com.dust.core.event.loop;
+package com.dust.core.eventloop.impl;
 
-import com.dust.core.event.EventLoop;
+import com.dust.core.eventloop.EventLoop;
+import com.dust.core.eventloop.ScheduleEventLoop;
 import com.dust.core.sys.FrameSystem;
 
 /**
  * 事件循环模板
  */
-public abstract class AbstractEventLoop implements EventLoop {
+public abstract class AbstractEventLoop implements ScheduleEventLoop {
 
     /**
      * 单次主循环的内容
@@ -29,11 +30,6 @@ public abstract class AbstractEventLoop implements EventLoop {
      * 执行每帧的逻辑
      */
     protected abstract void executeEachFrame();
-
-    /**
-     * 执行所有就绪的任务
-     */
-    protected abstract void runAllTasks();
 
     /**
      * 处理所有就绪的事件

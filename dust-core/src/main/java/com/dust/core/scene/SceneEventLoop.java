@@ -1,8 +1,8 @@
 package com.dust.core.scene;
 
-import com.dust.core.event.loop.DefaultEventLoop;
+import com.dust.core.eventloop.impl.DustEventLoop;
 
-public class SceneEventLoop extends DefaultEventLoop {
+public class SceneEventLoop extends DustEventLoop {
 
     /**
      * 当前要执行和渲染的场景

@@ -22,11 +22,19 @@ public class DustApplication extends Application {
 
     private final static DustApplication INSTANCE = new DustApplication();
 
+    private DustApplication() {
+    }
+
+    public static DustApplication getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         INSTANCE.engine = createEngine();
         INSTANCE.appWindow = createWindow(stage);
         INSTANCE.appWindow.show();
+        INSTANCE.engine.start();
     }
 
     public static void launch(GameApplication app, Settings settings) {
@@ -38,12 +46,14 @@ public class DustApplication extends Application {
     private AppWindow createWindow(Stage stage) {
         return new AppWindow(
                 stage,
-                settings
+                INSTANCE.settings
         );
     }
 
     private Engine createEngine() {
-        return new Engine(new DefaultStage(settings.getFps()));
+        return new Engine(
+                new DefaultStage(INSTANCE.settings.getFps())
+        );
     }
 
 }

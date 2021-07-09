@@ -1,7 +1,7 @@
-module dust.launcher {
+module com.dust.launcher {
     requires javafx.graphics;
     requires lombok;
     requires dust.common;
-    requires dust.core;
+    requires com.dust.core;
     exports com.dust.launcher;
 }
