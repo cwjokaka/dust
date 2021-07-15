@@ -1,6 +1,5 @@
 package com.dust.core.eventloop.impl;
 
-import com.dust.core.eventloop.ScheduleEventLoop;
 import com.dust.core.scheduler.Scheduler;
 import com.dust.core.scheduler.impl.SchedulerImpl;
 import com.dust.core.task.Task;
