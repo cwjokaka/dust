@@ -24,7 +24,7 @@ public class EventEmitterImpl implements EventEmitter {
      * @param eventListener 监听器
      */
     @Override
-    public <T> void on(String eventName, EventListener<T> eventListener) {
+    public void on(String eventName, EventListener eventListener) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             listeners = new LinkedList<>();
@@ -39,7 +39,7 @@ public class EventEmitterImpl implements EventEmitter {
      * @param eventListener 监听器
      */
     @Override
-    public <T> void once(String eventName, OnceEventListener<T> eventListener) {
+    public void once(String eventName, OnceEventListener eventListener) {
         on(eventName, eventListener);
     }
 
@@ -49,7 +49,7 @@ public class EventEmitterImpl implements EventEmitter {
      * @param eventListener 监听器
      */
     @Override
-    public <T> void off(String eventName, EventListener<T> eventListener) {
+    public void off(String eventName, EventListener eventListener) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             return;
@@ -74,7 +74,7 @@ public class EventEmitterImpl implements EventEmitter {
      * @param eventName 事件名称
      */
     @Override
-    public <T> void emit(String eventName, Event<T> event) {
+    public void emit(String eventName, Event event) {
         List<EventListener> listeners = listenerMap.get(eventName);
         if (listeners == null) {
             return;

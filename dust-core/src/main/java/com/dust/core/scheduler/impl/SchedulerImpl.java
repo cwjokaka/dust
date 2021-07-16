@@ -2,12 +2,11 @@ package com.dust.core.scheduler.impl;
 
 import com.dust.core.scheduler.Scheduler;
 import com.dust.core.task.DelayTask;
-import com.dust.core.task.ScheduleTask;
 import com.dust.core.task.Task;
 import com.dust.core.task.TaskRef;
-import com.dust.core.task.frame.DefaultFrameDelayTask;
-import com.dust.core.task.frame.DefaultFrameRepeatTask;
-import com.dust.core.task.frame.DefaultFrameScheduleTask;
+import com.dust.core.task.tick.DefaultTickDelayTask;
+import com.dust.core.task.tick.DefaultTickRepeatTask;
+import com.dust.core.task.tick.DefaultTickScheduleTask;
 import com.dust.core.task.time.DefaultTimeDelayTask;
 import com.dust.core.task.time.DefaultTimeRepeatTask;
 import com.dust.core.task.time.DefaultTimeScheduleTask;
@@ -77,7 +76,7 @@ public class SchedulerImpl implements Scheduler {
     @Override
     public TaskRef setLoopDelay(Task task, long loopDelay) {
         Objects.requireNonNull(task);
-        DefaultFrameDelayTask frameDelayTask = new DefaultFrameDelayTask(task, loopDelay);
+        DefaultTickDelayTask frameDelayTask = new DefaultTickDelayTask(task, loopDelay);
         taskFramePriorityQueue.add(frameDelayTask);
         return frameDelayTask;
     }
@@ -90,7 +89,7 @@ public class SchedulerImpl implements Scheduler {
     @Override
     public TaskRef setLoopRepeat(Task task, long initLoopDelay, long loopDelay, int repeatCount) {
         Objects.requireNonNull(task);
-        DefaultFrameRepeatTask frameRepeatTask = new DefaultFrameRepeatTask(task, initLoopDelay, loopDelay, repeatCount);
+        DefaultTickRepeatTask frameRepeatTask = new DefaultTickRepeatTask(task, initLoopDelay, loopDelay, repeatCount);
         taskFramePriorityQueue.add(frameRepeatTask);
         return frameRepeatTask;
     }
@@ -103,7 +102,7 @@ public class SchedulerImpl implements Scheduler {
     @Override
     public TaskRef setLoopInterval(Task task, long initLoopDelay, long loopDelay) {
         Objects.requireNonNull(task);
-        DefaultFrameScheduleTask frameScheduleTask = new DefaultFrameScheduleTask(task, initLoopDelay, loopDelay);
+        DefaultTickScheduleTask frameScheduleTask = new DefaultTickScheduleTask(task, initLoopDelay, loopDelay);
         taskFramePriorityQueue.add(frameScheduleTask);
         return frameScheduleTask;
     }
