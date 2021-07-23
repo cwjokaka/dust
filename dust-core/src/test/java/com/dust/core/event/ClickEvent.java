@@ -1,4 +1,4 @@
 package com.dust.core.event;
 
-public abstract class ClickEvent implements Event<ClickData> {
+public interface ClickEvent extends Event<ClickData> {
 }

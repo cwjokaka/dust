@@ -24,11 +24,11 @@ public class EventSourceTest {
     }
 
     @Test
-    public void testEventBundle() throws InterruptedException {
+    public void testAbsEventBundle() throws InterruptedException {
         EventSource eventSource = new EventSourceImpl(eventLoopDoNothing);
-        AtomicInteger num = new AtomicInteger(0);
+        AtomicInteger clickCounter = new AtomicInteger(0);
         eventSource.on(ClickEvent.class, event -> {
-            num.getAndIncrement();
+            clickCounter.getAndIncrement();
             Assert.assertEquals(1, event.getData().getX());
             Assert.assertEquals(2, event.getData().getY());
         });
@@ -44,7 +44,21 @@ public class EventSourceTest {
             }
         });
         Thread.sleep(1000);
-        Assert.assertEquals(1, num.get());
+        Assert.assertEquals(1, clickCounter.get());
+    }
+
+    @Test
+    public void testConEventBundle() throws InterruptedException {
+        EventSource eventSource = new EventSourceImpl(eventLoopDoNothing);
+        AtomicInteger clickCounter = new AtomicInteger(0);
+        eventSource.on(DoubleClickEvent.class, event -> {
+            clickCounter.getAndIncrement();
+            Assert.assertEquals(1, event.getData().getX());
+            Assert.assertEquals(2, event.getData().getY());
+        });
+        eventSource.emit(new DoubleClickEvent(1, 2, eventSource));
+        Thread.sleep(1000);
+        Assert.assertEquals(1, clickCounter.get());
     }
 
 

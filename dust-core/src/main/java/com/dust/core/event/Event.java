@@ -2,6 +2,7 @@ package com.dust.core.event;
 
 /**
  * 事件
+ * @author LENOVO
  */
 public interface Event<D> {
 

@@ -2,6 +2,9 @@ package com.dust.core.event;
 
 import java.util.ServiceLoader;
 
+/**
+ * 事件源
+ */
 public interface EventSource {
 
     /**

@@ -7,7 +7,7 @@ import com.dust.core.event.internal.EventQueueFactory;
 import java.util.*;
 
 /**
- * 事件发射器
+ * 事件源
  */
 public class EventSourceImpl implements EventSource {
 
@@ -37,10 +37,11 @@ public class EventSourceImpl implements EventSource {
         listenerMap.put(eventClass, listeners);
     }
 
+
     @SuppressWarnings("unchecked")
     @Override
     public <E extends Event<?>> void handle(E event) {
-        List<EventListener<? extends Event<?>>> listeners = listenerMap.get(event.getClass().getSuperclass());
+        List<EventListener<? extends Event<?>>> listeners = listenerMap.get(getEventRealClass(event));
         if (listeners == null) {
             return;
         }
@@ -54,10 +55,17 @@ public class EventSourceImpl implements EventSource {
         }
     }
 
+    private Class<?> getEventRealClass(Event<?> event) {
+        Class<? extends Event> eventClass = event.getClass();
+        if (eventClass.isAnonymousClass()) {
+            Class<?>[] interfaces = eventClass.getInterfaces();
+        }
+        return eventClass;
+    }
+
+
     @Override
     public void emit(Event<?> event) {
-        Class<? extends Event> aClass = event.getClass();
-        Class<?> superclass = aClass.getSuperclass();
         eventQueue.offer(event);
     }
 
