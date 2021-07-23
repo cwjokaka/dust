@@ -18,7 +18,7 @@ public class SceneEventLoop extends DustEventLoop {
     }
 
     @Override
-    public void executeEachFrame() {
+    public void executeEachTick() {
         currentScene.executeInEachFrame();
     }
 

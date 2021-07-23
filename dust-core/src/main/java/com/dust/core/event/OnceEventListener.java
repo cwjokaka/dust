@@ -1,7 +1,7 @@
 package com.dust.core.event;
 
 @FunctionalInterface
-public interface OnceEventListener extends EventListener {
+public interface OnceEventListener<E extends Event<?>> extends EventListener<E> {
 
     /**
      * 是否可重用

@@ -10,7 +10,7 @@ public class SayHiEventLoop extends DustEventLoop {
     }
 
     @Override
-    protected void executeEachFrame() {
+    protected void executeEachTick() {
         System.out.println("HI!");
     }
 

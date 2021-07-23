@@ -22,13 +22,13 @@ public abstract class AbstractEventLoop implements ScheduleEventLoop {
      */
     private void executeLogic() {
         TickSystem.increaseTick();
-        executeEachFrame();
+        executeEachTick();
     }
 
     /**
      * 执行每帧的逻辑
      */
-    protected abstract void executeEachFrame();
+    protected abstract void executeEachTick();
 
     /**
      * 处理所有就绪的事件

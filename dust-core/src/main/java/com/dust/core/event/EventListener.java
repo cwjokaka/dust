@@ -4,13 +4,13 @@ package com.dust.core.event;
  * 事件监听器
  */
 @FunctionalInterface
-public interface EventListener {
+public interface EventListener<E extends Event<?>> {
 
     /**
      * 处理发生的事件
      * @param event 事件
      */
-    void handle(Event event);
+    void handle(E event);
 
     /**
      * 是否可重复监听

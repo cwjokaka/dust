@@ -1,10 +1,16 @@
 package com.dust.core.eventloop.impl;
 
+import com.dust.core.annotation.MainEventQueue;
+import com.dust.core.event.Event;
+import com.dust.core.event.EventQueue;
+import com.dust.core.event.EventSource;
 import com.dust.core.scheduler.Scheduler;
 import com.dust.core.scheduler.impl.SchedulerImpl;
 import com.dust.core.task.Task;
 import com.dust.core.task.TaskRef;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -12,7 +18,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * 默认事件循环
  */
-public abstract class DustEventLoop extends AbstractEventLoop {
+@MainEventQueue
+public abstract class DustEventLoop extends AbstractEventLoop implements EventQueue {
 
     /**
      * 循环周期长度(毫秒)
@@ -23,6 +30,11 @@ public abstract class DustEventLoop extends AbstractEventLoop {
      * 执行事件循环的线程
      */
     private ScheduledExecutorService eventLoopThread;
+
+    /**
+     * 事件队列
+     */
+    private final Queue<Event<?>> eventQueue = new LinkedList<>();
 
     private volatile boolean isRun = false;
 
@@ -45,12 +57,11 @@ public abstract class DustEventLoop extends AbstractEventLoop {
     @Override
     public void pause() {
         this.isRun = false;
-        eventLoopThread.shutdown();
     }
 
     @Override
     public void resume() {
-        rebuildEventLoopThread();
+        this.isRun = true;
     }
 
     @Override
@@ -99,11 +110,26 @@ public abstract class DustEventLoop extends AbstractEventLoop {
 
     @Override
     protected void processAllEvents() {
-        // TODO
+        while (!eventQueue.isEmpty()) {
+            Event event = eventQueue.poll();
+            EventSource eventSource = event.getEventSource();
+            eventSource.handle(event);
+        }
+
     }
 
     @Override
-    protected void executeEachFrame() {
+    public void offer(Event event) {
+        eventQueue.offer(event);
+    }
+
+    @Override
+    public Event poll() {
+        return eventQueue.poll();
+    }
+
+    @Override
+    protected void executeEachTick() {
 
     }
 

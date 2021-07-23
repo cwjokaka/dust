@@ -73,4 +73,18 @@ public class EventLoopTest {
         Assert.assertNotEquals(4, num.get());
     }
 
+    @Test
+    public void testPauseEventLoop() throws InterruptedException {
+        EventLoop myEventLoop = new SayHiEventLoop(500);
+        myEventLoop.run();
+        System.out.println("run");
+        Thread.sleep(2000);
+        System.out.println("pause");
+        myEventLoop.pause();
+        Thread.sleep(2000);
+        System.out.println("resume");
+        myEventLoop.resume();
+        myEventLoop.terminate();
+    }
+
 }

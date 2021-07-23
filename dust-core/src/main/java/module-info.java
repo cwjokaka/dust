@@ -1,4 +1,4 @@
-import com.dust.core.event.impl.EventEmitterImpl;
+import com.dust.core.event.impl.EventSourceImpl;
 
 module com.dust.core {
     exports com.dust.core.event;
@@ -7,6 +7,7 @@ module com.dust.core {
     exports com.dust.core.scene;
     exports com.dust.core.stage;
 
-    provides com.dust.core.event.EventEmitter with EventEmitterImpl;
-    uses com.dust.core.event.EventEmitter;
+    provides com.dust.core.event.EventSource with EventSourceImpl;
+    uses com.dust.core.event.EventSource;
+    uses com.dust.core.event.EventQueue;
 }
