@@ -2,8 +2,8 @@ package com.dust.core.event;
 
 public interface EventQueue {
 
-    void offer(Event event);
+    void offer(Event<?> event);
 
-    Event poll();
+    Event<?> poll();
 
 }

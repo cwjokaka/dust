@@ -61,5 +61,30 @@ public class EventSourceTest {
         Assert.assertEquals(1, clickCounter.get());
     }
 
+    @Test
+    public void testInterfaceEventBundle() throws InterruptedException {
+        EventSource eventSource = new EventSourceImpl(eventLoopDoNothing);
+//        EventSource eventSource = EventSource.getEventSources().iterator().next();
+        AtomicInteger clickCounter = new AtomicInteger(0);
+        eventSource.on(NoClickEvent.class, event -> {
+            clickCounter.getAndIncrement();
+            Assert.assertEquals(1, event.getData().getX());
+            Assert.assertEquals(2, event.getData().getY());
+        });
+        eventSource.emit(new NoClickEvent() {
+            @Override
+            public ClickData getData() {
+                return new ClickData(1, 2);
+            }
+
+            @Override
+            public EventSource getEventSource() {
+                return eventSource;
+            }
+        });
+        Thread.sleep(1000);
+        Assert.assertEquals(1, clickCounter.get());
+    }
+
 
 }

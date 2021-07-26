@@ -58,7 +58,11 @@ public class EventSourceImpl implements EventSource {
     private Class<?> getEventRealClass(Event<?> event) {
         Class<? extends Event> eventClass = event.getClass();
         if (eventClass.isAnonymousClass()) {
-            Class<?>[] interfaces = eventClass.getInterfaces();
+            Class<?> superclass = eventClass.getSuperclass();
+            if (superclass == Object.class) {
+                return eventClass.getInterfaces()[0];
+            }
+            return superclass;
         }
         return eventClass;
     }

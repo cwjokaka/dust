@@ -3,7 +3,6 @@ package com.dust.core.eventloop.impl;
 import com.dust.core.annotation.MainEventQueue;
 import com.dust.core.event.Event;
 import com.dust.core.event.EventQueue;
-import com.dust.core.event.EventSource;
 import com.dust.core.scheduler.Scheduler;
 import com.dust.core.scheduler.impl.SchedulerImpl;
 import com.dust.core.task.Task;
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * 默认事件循环
  */
-@MainEventQueue
 public abstract class DustEventLoop extends AbstractEventLoop implements EventQueue {
 
     /**
@@ -112,19 +110,17 @@ public abstract class DustEventLoop extends AbstractEventLoop implements EventQu
     protected void processAllEvents() {
         while (!eventQueue.isEmpty()) {
             Event event = eventQueue.poll();
-            EventSource eventSource = event.getEventSource();
-            eventSource.handle(event);
+            event.getEventSource().handle(event);
         }
-
     }
 
     @Override
-    public void offer(Event event) {
+    public void offer(Event<?> event) {
         eventQueue.offer(event);
     }
 
     @Override
-    public Event poll() {
+    public Event<?> poll() {
         return eventQueue.poll();
     }
 
