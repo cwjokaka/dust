@@ -10,7 +10,7 @@ public interface EventLoop {
     /**
      * 开始事件循环
      */
-    void run();
+    void start();
 
     /**
      * 暂停事件循环

@@ -10,7 +10,7 @@ public class EventLoopTest {
     @Test
     public void testEventLoop() throws InterruptedException {
         EventLoop myEventLoop = new SayHiEventLoop(500);
-        myEventLoop.run();
+        myEventLoop.start();
         System.out.println("run");
         Thread.sleep(2000);
         System.out.println("pause");
@@ -24,7 +24,7 @@ public class EventLoopTest {
     public void testTimeDelay() throws InterruptedException {
         AtomicInteger num = new AtomicInteger(0);
         ScheduleEventLoop myEventLoop = new TimeDelayEventLoop(33);
-        myEventLoop.run();
+        myEventLoop.start();
         myEventLoop.setTimeDelay(
                 () -> num.set(1),
                 500);
@@ -37,7 +37,7 @@ public class EventLoopTest {
     public void testTimeRepeat() throws InterruptedException {
         AtomicInteger num = new AtomicInteger(0);
         ScheduleEventLoop myEventLoop = new TimeDelayEventLoop(1);
-        myEventLoop.run();
+        myEventLoop.start();
         myEventLoop.setTimeRepeat(
                 () -> num.addAndGet(1),
                 3,
@@ -57,7 +57,7 @@ public class EventLoopTest {
     public void testTimeInterval() throws InterruptedException {
         AtomicInteger num = new AtomicInteger(0);
         ScheduleEventLoop myEventLoop = new TimeDelayEventLoop(1);
-        myEventLoop.run();
+        myEventLoop.start();
         myEventLoop.setTimeInterval(
                 () -> num.addAndGet(1),
                 100);
@@ -76,7 +76,7 @@ public class EventLoopTest {
     @Test
     public void testPauseEventLoop() throws InterruptedException {
         EventLoop myEventLoop = new SayHiEventLoop(500);
-        myEventLoop.run();
+        myEventLoop.start();
         System.out.println("run");
         Thread.sleep(2000);
         System.out.println("pause");

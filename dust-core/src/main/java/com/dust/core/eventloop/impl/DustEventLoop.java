@@ -1,6 +1,5 @@
 package com.dust.core.eventloop.impl;
 
-import com.dust.core.annotation.MainEventQueue;
 import com.dust.core.event.Event;
 import com.dust.core.event.EventQueue;
 import com.dust.core.scheduler.Scheduler;
@@ -34,7 +33,7 @@ public abstract class DustEventLoop extends AbstractEventLoop implements EventQu
      */
     private final Queue<Event<?>> eventQueue = new LinkedList<>();
 
-    private volatile boolean isRun = false;
+    private volatile boolean active = false;
 
     /**
      * 任务调度器
@@ -46,20 +45,28 @@ public abstract class DustEventLoop extends AbstractEventLoop implements EventQu
     }
 
     @Override
-    public void run() {
-        this.isRun = true;
-        rebuildEventLoopThread();
+    public void start() {
+        if (!active) {
+            active = true;
+            rebuildEventLoopThread();
+        }
     }
 
 
     @Override
     public void pause() {
-        this.isRun = false;
+        if (active) {
+            active = false;
+            eventLoopThread.shutdown();
+        }
     }
 
     @Override
     public void resume() {
-        this.isRun = true;
+        if (!active) {
+            this.active = true;
+            rebuildEventLoopThread();
+        }
     }
 
     @Override
@@ -73,7 +80,7 @@ public abstract class DustEventLoop extends AbstractEventLoop implements EventQu
     }
 
     private void onLoop() {
-        if (isRun) {
+        if (active) {
             beforeLoop();
             loop();
             afterLoop();

@@ -15,7 +15,7 @@ public class EventQueueFactory {
                     .filter(eventQueueProvider -> eventQueueProvider.type().isAnnotationPresent(MainEventQueue.class))
                     .map(ServiceLoader.Provider::get)
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Could not find any MainEventQueue in module!"));
+                    .orElseThrow(() -> new RuntimeException("Could not find any EventQueue marked as @MainEventQueue in module!"));
         }
         return cache;
     }

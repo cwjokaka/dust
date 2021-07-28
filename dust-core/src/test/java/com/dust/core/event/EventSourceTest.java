@@ -15,7 +15,7 @@ public class EventSourceTest {
     @Before
     public void before() {
         eventLoopDoNothing = new EventLoopDoNothing(200);
-        eventLoopDoNothing.run();
+        eventLoopDoNothing.start();
     }
 
     @After
@@ -32,19 +32,23 @@ public class EventSourceTest {
             Assert.assertEquals(1, event.getData().getX());
             Assert.assertEquals(2, event.getData().getY());
         });
+        emitClickEvent(eventSource);
+        emitClickEvent(eventSource);
+        Thread.sleep(1000);
+        Assert.assertEquals(2, clickCounter.get());
+    }
+
+    private void emitClickEvent(EventSource eventSource) {
         eventSource.emit(new ClickEvent() {
             @Override
             public ClickData getData() {
                 return new ClickData(1, 2);
             }
-
             @Override
             public EventSource getEventSource() {
                 return eventSource;
             }
         });
-        Thread.sleep(1000);
-        Assert.assertEquals(1, clickCounter.get());
     }
 
     @Test
@@ -86,5 +90,61 @@ public class EventSourceTest {
         Assert.assertEquals(1, clickCounter.get());
     }
 
+    @Test
+    public void testAbsOnceEventBundle() throws InterruptedException {
+        EventSource eventSource = new EventSourceImpl(eventLoopDoNothing);
+        AtomicInteger clickCounter = new AtomicInteger(0);
+        eventSource.once(ClickEvent.class, event -> {
+            clickCounter.getAndIncrement();
+            Assert.assertEquals(1, event.getData().getX());
+            Assert.assertEquals(2, event.getData().getY());
+        });
+        // 第一次触发事件
+        emitClickEvent(eventSource);
+        // 第二次触发事件(已无监听器)
+        emitClickEvent(eventSource);
+        Thread.sleep(1000);
+        Assert.assertEquals(1, clickCounter.get());
+    }
+
+    @Test
+    public void testOffAllEventBundle() throws InterruptedException {
+        EventSource eventSource = new EventSourceImpl(eventLoopDoNothing);
+        AtomicInteger clickCounter = new AtomicInteger(0);
+        eventSource.on(ClickEvent.class, event -> {
+            clickCounter.getAndIncrement();
+        });
+        eventSource.on(ClickEvent.class, event -> {
+            clickCounter.getAndIncrement();
+        });
+        // 第一次触发事件
+        emitClickEvent(eventSource);
+        Thread.sleep(1000);
+        eventSource.offAll(ClickEvent.class);
+        // 第二次触发事件(已无监听器)
+        emitClickEvent(eventSource);
+        Thread.sleep(1000);
+        Assert.assertEquals(2, clickCounter.get());
+    }
+
+    @Test
+    public void testOffEventBundle() throws InterruptedException {
+        EventSource eventSource = new EventSourceImpl(eventLoopDoNothing);
+        AtomicInteger clickCounter = new AtomicInteger(0);
+        EventListener<ClickEvent> eventListener = event -> {
+            clickCounter.getAndIncrement();
+            Assert.assertEquals(1, event.getData().getX());
+            Assert.assertEquals(2, event.getData().getY());
+        };
+        eventSource.on(ClickEvent.class, eventListener);
+        // 第一次触发事件
+        emitClickEvent(eventSource);
+        Thread.sleep(1000);
+        eventSource.off(ClickEvent.class, eventListener);
+        // 第二次触发事件(已无监听器)
+        emitClickEvent(eventSource);
+        Thread.sleep(1000);
+        Assert.assertEquals(1, clickCounter.get());
+    }
 
 }

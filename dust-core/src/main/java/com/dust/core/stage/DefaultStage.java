@@ -40,7 +40,7 @@ public class DefaultStage implements Stage {
 
     @Override
     public void start() {
-        sceneEventLoop.run();
+        sceneEventLoop.start();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class DefaultStage implements Stage {
         }
         sceneMap.put(scene.getName(), scene);
         sceneEventLoop.switchTo(scene);
-        sceneEventLoop.run();
+        sceneEventLoop.start();
         sceneStack.push(scene);
     }
 

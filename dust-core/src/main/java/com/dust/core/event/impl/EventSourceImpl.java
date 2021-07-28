@@ -37,6 +37,23 @@ public class EventSourceImpl implements EventSource {
         listenerMap.put(eventClass, listeners);
     }
 
+    @Override
+    public <E extends Event<?>> void once(Class<E> eventClass, OnceEventListener<E> eventListener) {
+        on(eventClass, eventListener);
+    }
+
+    @Override
+    public <E extends Event<?>> void off(Class<E> eventClass, EventListener<E> eventListener) {
+        List<EventListener<? extends Event<?>>> listeners = listenerMap.get(eventClass);
+        if (listeners != null) {
+            listeners.remove(eventListener);
+        }
+    }
+
+    @Override
+    public <E extends Event<?>> void offAll(Class<E> eventClass) {
+        listenerMap.remove(eventClass);
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -74,40 +91,6 @@ public class EventSourceImpl implements EventSource {
     }
 
 
-    //    @Override
-//    public void on(Class<? extends Event<?>> eventClass, EventListener eventListener) {
-//        List<EventListener> listeners = listenerMap.get(eventClass);
-//        if (listeners == null) {
-//            listeners = new LinkedList<>();
-//        }
-//        listeners.add(eventListener);
-//        listenerMap.put(eventClass, listeners);
-//    }
-
-    //    /**
-//     * 注册事件监听器
-//     * @param eventName 事件名称
-//     * @param eventListener 监听器
-//     */
-//    @Override
-//    public void on(String eventName, EventListener eventListener) {
-//        List<EventListener> listeners = listenerMap.get(eventName);
-//        if (listeners == null) {
-//            listeners = new LinkedList<>();
-//        }
-//        listeners.add(eventListener);
-//        listenerMap.put(eventName, listeners);
-//    }
-//
-//    /**
-//     * 注册一次性事件监听
-//     * @param eventName 事件名称
-//     * @param eventListener 监听器
-//     */
-//    @Override
-//    public void once(String eventName, OnceEventListener eventListener) {
-//        on(eventName, eventListener);
-//    }
 //
 //    /**
 //     * 卸载事件监听
