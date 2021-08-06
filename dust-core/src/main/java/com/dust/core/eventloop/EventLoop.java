@@ -25,6 +25,6 @@ public interface EventLoop {
     /**
      * 终止事件循环，并且无法使用{@link EventLoop#resume()}恢复
      */
-    void terminate();
+    void kill();
 
 }

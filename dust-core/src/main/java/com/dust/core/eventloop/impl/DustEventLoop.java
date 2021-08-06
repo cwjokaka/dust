@@ -70,7 +70,7 @@ public abstract class DustEventLoop extends AbstractEventLoop implements EventQu
     }
 
     @Override
-    public void terminate() {
+    public void kill() {
         eventLoopThread.shutdown();
     }
 

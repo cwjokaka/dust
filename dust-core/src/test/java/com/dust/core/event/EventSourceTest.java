@@ -20,7 +20,7 @@ public class EventSourceTest {
 
     @After
     public void after() {
-        eventLoopDoNothing.terminate();
+        eventLoopDoNothing.kill();
     }
 
     @Test

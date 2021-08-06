@@ -68,7 +68,7 @@ public class EventLoopTest {
         Assert.assertEquals(2, num.get());
         Thread.sleep(110);
         Assert.assertEquals(3, num.get());
-        myEventLoop.terminate();
+        myEventLoop.kill();
         Thread.sleep(110);
         Assert.assertNotEquals(4, num.get());
     }
@@ -84,7 +84,7 @@ public class EventLoopTest {
         Thread.sleep(2000);
         System.out.println("resume");
         myEventLoop.resume();
-        myEventLoop.terminate();
+        myEventLoop.kill();
     }
 
 }
