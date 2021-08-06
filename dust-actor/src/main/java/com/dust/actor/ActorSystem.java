@@ -6,6 +6,8 @@ public interface ActorSystem {
 
     <T> Actor<T> create(Behavior<T> behavior);
 
+    <T> void start(Actor<T> actor);
+
     <T> Actor<T> createAndStart(Behavior<T> behavior);
 
     String getName();

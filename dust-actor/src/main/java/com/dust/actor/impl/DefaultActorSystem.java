@@ -10,13 +10,7 @@ public class DefaultActorSystem implements ActorSystem {
 
     private final String name;
 
-    private final ExecutorService executorService = new ThreadPoolExecutor(
-            2,
-            2,
-            0, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<>(),
-            r -> new Thread(r, "ActorSystem")
-    );
+    private final ExecutorService executorService = new ForkJoinPool();
 
     public DefaultActorSystem(String name) {
         this.name = name;
@@ -44,4 +38,8 @@ public class DefaultActorSystem implements ActorSystem {
         executorService.shutdown();
     }
 
+    @Override
+    public <T> void start(Actor<T> actor) {
+        executorService.execute(actor);
+    }
 }

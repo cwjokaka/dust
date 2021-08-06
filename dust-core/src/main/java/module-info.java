@@ -1,6 +1,4 @@
 import com.dust.core.event.impl.EventSourceImpl;
-import com.dust.core.event.internal.EventQueueFactory;
-import com.dust.core.eventloop.impl.DustEventLoop;
 
 module com.dust.core {
     exports com.dust.core.event;

@@ -22,6 +22,9 @@ public class ActorTest {
             @Override
             public void onReceive(Actor<Integer> receiver, Mail<Integer> mail) {
                 System.out.println("I, actorTwo, got an int: " + mail.getData() + " from " + mail.getSender());
+                if (mail.getData() == 0) {
+                    throw new RuntimeException("Can not deal the num of zero");
+                }
             }
 
             @Override
@@ -33,6 +36,7 @@ public class ActorTest {
         actorOne.send(actorOne, 2);
         actorTwo.send(actorOne, 567);
         actorOne.send(actorTwo, 765);
+        actorOne.send(actorTwo, 0);
         Thread.sleep(2000);
     }
 

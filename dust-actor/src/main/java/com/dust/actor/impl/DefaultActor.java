@@ -33,7 +33,7 @@ public class DefaultActor<T> implements Actor<T> {
             while (true) {
                 behavior.onReceive(this, mailBox.take());
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             behavior.onException(this, e);
         }
     }
