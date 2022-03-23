@@ -38,6 +38,7 @@ public class ActorTest {
         actorOne.send(actorTwo, 765);
         actorOne.send(actorTwo, 0);
         Thread.sleep(2000);
+
     }
 
 }

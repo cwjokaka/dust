@@ -4,6 +4,7 @@ import java.util.ServiceLoader;
 
 /**
  * 事件源
+ * @author LENOVO
  */
 public interface EventSource {
 
